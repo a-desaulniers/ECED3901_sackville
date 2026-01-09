@@ -35,4 +35,6 @@ fi
 
 source /opt/ros/jazzy/setup.bash
 
+ros2 --version
+
 echo "Installation complete. Please restart your terminal or run: source ~/.bashrc"
