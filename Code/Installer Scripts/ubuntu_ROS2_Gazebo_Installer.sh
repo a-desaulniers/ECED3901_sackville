@@ -33,4 +33,6 @@ if ! grep -q "source /opt/ros/jazzy/setup.bash" ~/.bashrc; then
     echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 fi
 
+source /opt/ros/jazzy/setup.bash
+
 echo "Installation complete. Please restart your terminal or run: source ~/.bashrc"
