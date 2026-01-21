@@ -1,0 +1,204 @@
+[0.000000] (-) TimerEvent: {}
+[0.001061] (eced3901) JobQueued: {'identifier': 'eced3901', 'dependencies': OrderedDict()}
+[0.001389] (eced3901) JobStarted: {'identifier': 'eced3901'}
+[0.008648] (eced3901) JobProgress: {'identifier': 'eced3901', 'progress': 'cmake'}
+[0.008985] (eced3901) Command: {'cmd': ['/usr/bin/cmake', '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws', '-DCMAKE_INSTALL_PREFIX=/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901'], 'cwd': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901', 'env': OrderedDict({'MAIL': '/var/spool/mail/desau', 'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'USER': 'desau', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'HOSTNAME': 'robot', 'XDG_SESSION_TYPE': 'wayland', 'CSF_TObjDefaults': '/usr/share/opencascade/resources/StdResource', 'XDG_CACHE_HOME': '/home/desau/.cache', 'CSF_XCAFDefaults': '/usr/share/opencascade/resources/StdResource', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'CSF_XSMessage': '/usr/share/opencascade/resources/XSMessage', 'MOTD_SHOWN': 'pam', 'HOME': '/home/desau', 'CSF_TObjMessage': '/usr/share/opencascade/resources/TObj', 'MMGT_CLEAR': '1', 'OLDPWD': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws', 'TERM_PROGRAM_VERSION': '49.2', 'DESKTOP_SESSION': 'gnome', 'PYENV_SHELL': 'bash', 'CSF_ShadersDirectory': '/usr/share/opencascade/resources/Shaders', 'CSF_MDTVTexturesDirectory': '/usr/share/opencascade/resources/Textures', 'ROS_PYTHON_VERSION': '3', 'PS1': '[\\u@\\h \\W]\\$', 'DRAWHOME': '/usr/share/opencascade/resources/DrawResources', 'MANAGERPID': '2833', 'DISTROBOX_ENTER_PATH': '/home/desau/.var/app/com.ranfdev.DistroShelf/data/distroshelf/distrobox-1.8.2.1/distrobox-enter', 'SYSTEMD_EXEC_PID': '4492', 'CSF_IGESDefaults': '/usr/share/opencascade/resources/XSTEPResource', 'XDG_STATE_HOME': '/home/desau/.local/state', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'container': 'docker', 'CASROOT': '/usr', 'DEBUGINFOD_URLS': 'https://debuginfod.archlinux.org', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'desau', 'MANAGERPIDFDID': '2834', 'JOURNAL_STREAM': '9:30278', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'CSF_LANGUAGE': 'us', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/flatpak-session-helper.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'TERMINFO_DIRS': '/usr/share/terminfo:/run/host/usr/share/terminfo', 'USERNAME': 'desau', 'TERM': 'xterm-256color', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/home/desau/.pyenv/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/sbin:/sbin:/bin', 'GDM_LANG': 'en_US.UTF-8', 'INVOCATION_ID': 'ee118035004c41c6aa011e7ce4dfcfb7', '_JAVA_OPTIONS': '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'CSF_XmlOcafResource': '/usr/share/opencascade/resources/XmlOcafResource', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'GNOME', 'XDG_DATA_HOME': '/home/desau/.local/share', 'XDG_CONFIG_HOME': '/home/desau/.config', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'gnome', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.U05EJ3', 'CSF_StandardDefaults': '/usr/share/opencascade/resources/StdResource', 'TERM_PROGRAM': 'kgx', 'SSH_AUTH_SOCK': '/run/user/1000/gcr/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CSF_PluginDefaults': '/usr/share/opencascade/resources/StdResource', 'SHELL': '/usr/bin/bash', 'CSF_SHMessage': '/usr/share/opencascade/resources/SHMessage', 'GDMSESSION': 'gnome', 'CSF_STEPDefaults': '/usr/share/opencascade/resources/XSTEPResource', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901', 'CSF_StandardLiteDefaults': '/usr/share/opencascade/resources/StdResource', 'CONTAINER_ID': 'Ubuntu', 'XDG_CONFIG_DIRS': '/etc/xdg', 'CSF_DrawPluginDefaults': '/usr/share/opencascade/resources/DrawResources', 'CSF_MIGRATION_TYPES': '/usr/share/opencascade/resources/StdResource/MigrationSheet.txt', 'PYENV_ROOT': '/home/desau/.pyenv', 'XDG_DATA_DIRS': '/home/desau/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/usr/local/share:/usr/share', 'CSF_OCCTResourcePath': '/usr/share/opencascade/resources', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'DRAWDEFAULT': '/usr/share/opencascade/resources/DrawResources/DrawDefault', 'COLCON': '1', 'QT_IM_MODULES': 'wayland;ibus', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '8203', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy', 'CSF_EXCEPTION_PROMPT': '1'}), 'shell': False}
+[0.070843] (eced3901) StdoutLine: {'line': b'-- The C compiler identification is GNU 13.3.0\n'}
+[0.099862] (-) TimerEvent: {}
+[0.129456] (eced3901) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 13.3.0\n'}
+[0.152776] (eced3901) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.200005] (-) TimerEvent: {}
+[0.274300] (eced3901) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.286952] (eced3901) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.287232] (eced3901) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.287849] (eced3901) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.299855] (eced3901) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.300008] (-) TimerEvent: {}
+[0.395389] (eced3901) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.400124] (-) TimerEvent: {}
+[0.404051] (eced3901) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.404316] (eced3901) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.404771] (eced3901) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.409335] (eced3901) StdoutLine: {'line': b'-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)\n'}
+[0.500345] (-) TimerEvent: {}
+[0.547343] (eced3901) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter \n'}
+[0.600529] (-) TimerEvent: {}
+[0.639306] (eced3901) StdoutLine: {'line': b'-- Found rclcpp: 28.1.13 (/opt/ros/jazzy/share/rclcpp/cmake)\n'}
+[0.676357] (eced3901) StdoutLine: {'line': b'-- Found rosidl_generator_c: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)\n'}
+[0.688518] (eced3901) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)\n'}
+[0.700626] (-) TimerEvent: {}
+[0.702523] (eced3901) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.719535] (eced3901) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.795785] (eced3901) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)\n'}
+[0.799277] (eced3901) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.800706] (-) TimerEvent: {}
+[0.880583] (eced3901) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  \n'}
+[0.898346] (eced3901) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") \n'}
+[0.900813] (-) TimerEvent: {}
+[0.918850] (eced3901) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.989138] (eced3901) StdoutLine: {'line': b'-- Found rclpy: 7.1.6 (/opt/ros/jazzy/share/rclpy/cmake)\n'}
+[0.990692] (eced3901) StdoutLine: {'line': b'-- Found std_msgs: 5.3.6 (/opt/ros/jazzy/share/std_msgs/cmake)\n'}
+[1.000881] (-) TimerEvent: {}
+[1.003173] (eced3901) StdoutLine: {'line': b'-- Found geometry_msgs: 5.3.6 (/opt/ros/jazzy/share/geometry_msgs/cmake)\n'}
+[1.017997] (eced3901) StdoutLine: {'line': b'-- Found nav_msgs: 5.3.6 (/opt/ros/jazzy/share/nav_msgs/cmake)\n'}
+[1.044245] (eced3901) StdoutLine: {'line': b'-- Found tf2: 0.36.16 (/opt/ros/jazzy/share/tf2/cmake)\n'}
+[1.052309] (eced3901) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.17.3 (/opt/ros/jazzy/share/ament_lint_auto/cmake)\n'}
+[1.100980] (-) TimerEvent: {}
+[1.165565] (eced3901) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[1.165812] (eced3901) StdoutLine: {'line': b'-- Configured cppcheck include dirs: \n'}
+[1.165912] (eced3901) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[1.166934] (eced3901) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[1.167005] (eced3901) StdoutLine: {'line': b"-- Configured 'flake8' exclude dirs and/or files: \n"}
+[1.169150] (eced3901) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[1.170446] (eced3901) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[1.175101] (eced3901) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[1.175295] (eced3901) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[1.176732] (eced3901) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[1.178717] (eced3901) StdoutLine: {'line': b'-- Configuring done (1.2s)\n'}
+[1.193523] (eced3901) StdoutLine: {'line': b'-- Generating done (0.0s)\n'}
+[1.198027] (eced3901) StdoutLine: {'line': b'-- Build files have been written to: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901\n'}
+[1.201079] (-) TimerEvent: {}
+[1.207945] (eced3901) CommandEnded: {'returncode': 0}
+[1.208580] (eced3901) JobProgress: {'identifier': 'eced3901', 'progress': 'build'}
+[1.209202] (eced3901) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901', '--', '-j16', '-l16'], 'cwd': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901', 'env': OrderedDict({'MAIL': '/var/spool/mail/desau', 'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'USER': 'desau', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'HOSTNAME': 'robot', 'XDG_SESSION_TYPE': 'wayland', 'CSF_TObjDefaults': '/usr/share/opencascade/resources/StdResource', 'XDG_CACHE_HOME': '/home/desau/.cache', 'CSF_XCAFDefaults': '/usr/share/opencascade/resources/StdResource', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'CSF_XSMessage': '/usr/share/opencascade/resources/XSMessage', 'MOTD_SHOWN': 'pam', 'HOME': '/home/desau', 'CSF_TObjMessage': '/usr/share/opencascade/resources/TObj', 'MMGT_CLEAR': '1', 'OLDPWD': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws', 'TERM_PROGRAM_VERSION': '49.2', 'DESKTOP_SESSION': 'gnome', 'PYENV_SHELL': 'bash', 'CSF_ShadersDirectory': '/usr/share/opencascade/resources/Shaders', 'CSF_MDTVTexturesDirectory': '/usr/share/opencascade/resources/Textures', 'ROS_PYTHON_VERSION': '3', 'PS1': '[\\u@\\h \\W]\\$', 'DRAWHOME': '/usr/share/opencascade/resources/DrawResources', 'MANAGERPID': '2833', 'DISTROBOX_ENTER_PATH': '/home/desau/.var/app/com.ranfdev.DistroShelf/data/distroshelf/distrobox-1.8.2.1/distrobox-enter', 'SYSTEMD_EXEC_PID': '4492', 'CSF_IGESDefaults': '/usr/share/opencascade/resources/XSTEPResource', 'XDG_STATE_HOME': '/home/desau/.local/state', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'container': 'docker', 'CASROOT': '/usr', 'DEBUGINFOD_URLS': 'https://debuginfod.archlinux.org', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'desau', 'MANAGERPIDFDID': '2834', 'JOURNAL_STREAM': '9:30278', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'CSF_LANGUAGE': 'us', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/flatpak-session-helper.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'TERMINFO_DIRS': '/usr/share/terminfo:/run/host/usr/share/terminfo', 'USERNAME': 'desau', 'TERM': 'xterm-256color', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/home/desau/.pyenv/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/sbin:/sbin:/bin', 'GDM_LANG': 'en_US.UTF-8', 'INVOCATION_ID': 'ee118035004c41c6aa011e7ce4dfcfb7', '_JAVA_OPTIONS': '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'CSF_XmlOcafResource': '/usr/share/opencascade/resources/XmlOcafResource', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'GNOME', 'XDG_DATA_HOME': '/home/desau/.local/share', 'XDG_CONFIG_HOME': '/home/desau/.config', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'gnome', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.U05EJ3', 'CSF_StandardDefaults': '/usr/share/opencascade/resources/StdResource', 'TERM_PROGRAM': 'kgx', 'SSH_AUTH_SOCK': '/run/user/1000/gcr/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CSF_PluginDefaults': '/usr/share/opencascade/resources/StdResource', 'SHELL': '/usr/bin/bash', 'CSF_SHMessage': '/usr/share/opencascade/resources/SHMessage', 'GDMSESSION': 'gnome', 'CSF_STEPDefaults': '/usr/share/opencascade/resources/XSTEPResource', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901', 'CSF_StandardLiteDefaults': '/usr/share/opencascade/resources/StdResource', 'CONTAINER_ID': 'Ubuntu', 'XDG_CONFIG_DIRS': '/etc/xdg', 'CSF_DrawPluginDefaults': '/usr/share/opencascade/resources/DrawResources', 'CSF_MIGRATION_TYPES': '/usr/share/opencascade/resources/StdResource/MigrationSheet.txt', 'PYENV_ROOT': '/home/desau/.pyenv', 'XDG_DATA_DIRS': '/home/desau/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/usr/local/share:/usr/share', 'CSF_OCCTResourcePath': '/usr/share/opencascade/resources', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'DRAWDEFAULT': '/usr/share/opencascade/resources/DrawResources/DrawDefault', 'COLCON': '1', 'QT_IM_MODULES': 'wayland;ibus', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '8203', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy', 'CSF_EXCEPTION_PROMPT': '1'}), 'shell': False}
+[1.260980] (eced3901) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/dt1.dir/src/eced3901_dt1.cpp.o\x1b[0m\n'}
+[1.263173] (eced3901) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/talker.dir/src/publisher_member_function.cpp.o\x1b[0m\n'}
+[1.301337] (-) TimerEvent: {}
+[1.401731] (-) TimerEvent: {}
+[1.502009] (-) TimerEvent: {}
+[1.602279] (-) TimerEvent: {}
+[1.702610] (-) TimerEvent: {}
+[1.802977] (-) TimerEvent: {}
+[1.903252] (-) TimerEvent: {}
+[2.003648] (-) TimerEvent: {}
+[2.103950] (-) TimerEvent: {}
+[2.204269] (-) TimerEvent: {}
+[2.304634] (-) TimerEvent: {}
+[2.404965] (-) TimerEvent: {}
+[2.505400] (-) TimerEvent: {}
+[2.605752] (-) TimerEvent: {}
+[2.706078] (-) TimerEvent: {}
+[2.806413] (-) TimerEvent: {}
+[2.906785] (-) TimerEvent: {}
+[3.007209] (-) TimerEvent: {}
+[3.107674] (-) TimerEvent: {}
+[3.208355] (-) TimerEvent: {}
+[3.309041] (-) TimerEvent: {}
+[3.409531] (-) TimerEvent: {}
+[3.509843] (-) TimerEvent: {}
+[3.610261] (-) TimerEvent: {}
+[3.710557] (-) TimerEvent: {}
+[3.810904] (-) TimerEvent: {}
+[3.911375] (-) TimerEvent: {}
+[4.012034] (-) TimerEvent: {}
+[4.112612] (-) TimerEvent: {}
+[4.213062] (-) TimerEvent: {}
+[4.313373] (-) TimerEvent: {}
+[4.413681] (-) TimerEvent: {}
+[4.514154] (-) TimerEvent: {}
+[4.614463] (-) TimerEvent: {}
+[4.714813] (-) TimerEvent: {}
+[4.815275] (-) TimerEvent: {}
+[4.915747] (-) TimerEvent: {}
+[5.016096] (-) TimerEvent: {}
+[5.055136] (eced3901) StdoutLine: {'line': b'[ 75%] \x1b[32m\x1b[1mLinking CXX executable talker\x1b[0m\n'}
+[5.116218] (-) TimerEvent: {}
+[5.190775] (eced3901) StdoutLine: {'line': b'[ 75%] Built target talker\n'}
+[5.216335] (-) TimerEvent: {}
+[5.316720] (-) TimerEvent: {}
+[5.417039] (-) TimerEvent: {}
+[5.517454] (-) TimerEvent: {}
+[5.617821] (-) TimerEvent: {}
+[5.718085] (-) TimerEvent: {}
+[5.818395] (-) TimerEvent: {}
+[5.918886] (-) TimerEvent: {}
+[6.019274] (-) TimerEvent: {}
+[6.119596] (-) TimerEvent: {}
+[6.220041] (-) TimerEvent: {}
+[6.320393] (-) TimerEvent: {}
+[6.420707] (-) TimerEvent: {}
+[6.521190] (-) TimerEvent: {}
+[6.621446] (-) TimerEvent: {}
+[6.721810] (-) TimerEvent: {}
+[6.822105] (-) TimerEvent: {}
+[6.922507] (-) TimerEvent: {}
+[7.023029] (-) TimerEvent: {}
+[7.123570] (-) TimerEvent: {}
+[7.223952] (-) TimerEvent: {}
+[7.324261] (-) TimerEvent: {}
+[7.424591] (-) TimerEvent: {}
+[7.524933] (-) TimerEvent: {}
+[7.625356] (-) TimerEvent: {}
+[7.725826] (-) TimerEvent: {}
+[7.826187] (-) TimerEvent: {}
+[7.926808] (-) TimerEvent: {}
+[8.027110] (-) TimerEvent: {}
+[8.127589] (-) TimerEvent: {}
+[8.184830] (eced3901) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable dt1\x1b[0m\n'}
+[8.227708] (-) TimerEvent: {}
+[8.327986] (-) TimerEvent: {}
+[8.407005] (eced3901) StdoutLine: {'line': b'[100%] Built target dt1\n'}
+[8.416763] (eced3901) CommandEnded: {'returncode': 0}
+[8.417307] (eced3901) JobProgress: {'identifier': 'eced3901', 'progress': 'install'}
+[8.425148] (eced3901) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901'], 'cwd': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901', 'env': OrderedDict({'MAIL': '/var/spool/mail/desau', 'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'USER': 'desau', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'HOSTNAME': 'robot', 'XDG_SESSION_TYPE': 'wayland', 'CSF_TObjDefaults': '/usr/share/opencascade/resources/StdResource', 'XDG_CACHE_HOME': '/home/desau/.cache', 'CSF_XCAFDefaults': '/usr/share/opencascade/resources/StdResource', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'CSF_XSMessage': '/usr/share/opencascade/resources/XSMessage', 'MOTD_SHOWN': 'pam', 'HOME': '/home/desau', 'CSF_TObjMessage': '/usr/share/opencascade/resources/TObj', 'MMGT_CLEAR': '1', 'OLDPWD': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws', 'TERM_PROGRAM_VERSION': '49.2', 'DESKTOP_SESSION': 'gnome', 'PYENV_SHELL': 'bash', 'CSF_ShadersDirectory': '/usr/share/opencascade/resources/Shaders', 'CSF_MDTVTexturesDirectory': '/usr/share/opencascade/resources/Textures', 'ROS_PYTHON_VERSION': '3', 'PS1': '[\\u@\\h \\W]\\$', 'DRAWHOME': '/usr/share/opencascade/resources/DrawResources', 'MANAGERPID': '2833', 'DISTROBOX_ENTER_PATH': '/home/desau/.var/app/com.ranfdev.DistroShelf/data/distroshelf/distrobox-1.8.2.1/distrobox-enter', 'SYSTEMD_EXEC_PID': '4492', 'CSF_IGESDefaults': '/usr/share/opencascade/resources/XSTEPResource', 'XDG_STATE_HOME': '/home/desau/.local/state', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'container': 'docker', 'CASROOT': '/usr', 'DEBUGINFOD_URLS': 'https://debuginfod.archlinux.org', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'desau', 'MANAGERPIDFDID': '2834', 'JOURNAL_STREAM': '9:30278', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'CSF_LANGUAGE': 'us', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/flatpak-session-helper.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'TERMINFO_DIRS': '/usr/share/terminfo:/run/host/usr/share/terminfo', 'USERNAME': 'desau', 'TERM': 'xterm-256color', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/home/desau/.pyenv/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/sbin:/sbin:/bin', 'GDM_LANG': 'en_US.UTF-8', 'INVOCATION_ID': 'ee118035004c41c6aa011e7ce4dfcfb7', '_JAVA_OPTIONS': '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'CSF_XmlOcafResource': '/usr/share/opencascade/resources/XmlOcafResource', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'GNOME', 'XDG_DATA_HOME': '/home/desau/.local/share', 'XDG_CONFIG_HOME': '/home/desau/.config', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'gnome', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.U05EJ3', 'CSF_StandardDefaults': '/usr/share/opencascade/resources/StdResource', 'TERM_PROGRAM': 'kgx', 'SSH_AUTH_SOCK': '/run/user/1000/gcr/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CSF_PluginDefaults': '/usr/share/opencascade/resources/StdResource', 'SHELL': '/usr/bin/bash', 'CSF_SHMessage': '/usr/share/opencascade/resources/SHMessage', 'GDMSESSION': 'gnome', 'CSF_STEPDefaults': '/usr/share/opencascade/resources/XSTEPResource', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/build/eced3901', 'CSF_StandardLiteDefaults': '/usr/share/opencascade/resources/StdResource', 'CONTAINER_ID': 'Ubuntu', 'XDG_CONFIG_DIRS': '/etc/xdg', 'CSF_DrawPluginDefaults': '/usr/share/opencascade/resources/DrawResources', 'CSF_MIGRATION_TYPES': '/usr/share/opencascade/resources/StdResource/MigrationSheet.txt', 'PYENV_ROOT': '/home/desau/.pyenv', 'XDG_DATA_DIRS': '/home/desau/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/usr/local/share:/usr/share', 'CSF_OCCTResourcePath': '/usr/share/opencascade/resources', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'DRAWDEFAULT': '/usr/share/opencascade/resources/DrawResources/DrawDefault', 'COLCON': '1', 'QT_IM_MODULES': 'wayland;ibus', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '8203', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy', 'CSF_EXCEPTION_PROMPT': '1'}), 'shell': False}
+[8.428077] (-) TimerEvent: {}
+[8.432312] (eced3901) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[8.432469] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/lib/eced3901/talker\n'}
+[8.437941] (eced3901) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/lib/eced3901/talker" to ""\n'}
+[8.438096] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/lib/eced3901/dt1\n'}
+[8.443442] (eced3901) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/lib/eced3901/dt1" to ""\n'}
+[8.443574] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/config\n'}
+[8.443667] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/config/ekf.yaml\n'}
+[8.443756] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch\n'}
+[8.443843] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab3.launch.py\n'}
+[8.443921] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab4a.launch.py\n'}
+[8.444011] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab4b.launch.py\n'}
+[8.444098] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab5.launch.py\n'}
+[8.444190] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab5dt2.launch.py\n'}
+[8.444288] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab6a.launch.py\n'}
+[8.444366] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab6b.launch.py\n'}
+[8.444453] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab6nav.launch.py\n'}
+[8.444540] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/launch/lab7nav.launch.py\n'}
+[8.444629] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/maps\n'}
+[8.444717] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/maps/lab4_map.pgm\n'}
+[8.444794] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/maps/lab4_map.yaml\n'}
+[8.444880] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/models\n'}
+[8.444957] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/models/eced3901_lab4\n'}
+[8.445047] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/models/eced3901_lab4/model.config\n'}
+[8.445123] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/models/eced3901_lab4/model.sdf\n'}
+[8.445195] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/models/eced3901bot.urdf\n'}
+[8.445263] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/models/eced3901bot_description\n'}
+[8.445331] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/models/eced3901bot_description/model.config\n'}
+[8.445396] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/models/eced3901bot_description/model.sdf\n'}
+[8.445468] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/params\n'}
+[8.445526] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/params/nav2_params.yaml\n'}
+[8.445594] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/rviz\n'}
+[8.445652] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/rviz/nav2.rviz\n'}
+[8.445721] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/rviz/nav2_config.rviz\n'}
+[8.445789] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/rviz/urdf_config.rviz\n'}
+[8.445856] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/src\n'}
+[8.445914] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/src/eced3901_dt1.cpp\n'}
+[8.445983] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/src/publisher_member_function.cpp\n'}
+[8.446059] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/worlds\n'}
+[8.446117] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/worlds/eced3901_lab4.world\n'}
+[8.446188] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/worlds/eced3901_lab6.world\n'}
+[8.446248] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/worlds/empty.world\n'}
+[8.446318] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/lib/eced3901/demo_inspection.py\n'}
+[8.446386] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/ament_index/resource_index/package_run_dependencies/eced3901\n'}
+[8.446454] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/ament_index/resource_index/parent_prefix_path/eced3901\n'}
+[8.446521] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/environment/ament_prefix_path.sh\n'}
+[8.446588] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/environment/ament_prefix_path.dsv\n'}
+[8.446644] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/environment/path.sh\n'}
+[8.446699] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/environment/path.dsv\n'}
+[8.446754] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/local_setup.bash\n'}
+[8.446813] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/local_setup.sh\n'}
+[8.446872] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/local_setup.zsh\n'}
+[8.446929] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/local_setup.dsv\n'}
+[8.446986] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/package.dsv\n'}
+[8.447041] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/ament_index/resource_index/packages/eced3901\n'}
+[8.447096] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/cmake/eced3901Config.cmake\n'}
+[8.447159] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/cmake/eced3901Config-version.cmake\n'}
+[8.447213] (eced3901) StdoutLine: {'line': b'-- Installing: /home/desau/Documents/Git/ECED3901_sackville/sieben_repo/ros2_ws/install/eced3901/share/eced3901/package.xml\n'}
+[8.447978] (eced3901) CommandEnded: {'returncode': 0}
+[8.460174] (eced3901) JobEnded: {'identifier': 'eced3901', 'rc': 0}
+[8.460781] (-) EventReactorShutdown: {}
