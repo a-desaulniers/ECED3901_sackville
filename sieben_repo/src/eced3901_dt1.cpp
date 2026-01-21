@@ -44,7 +44,7 @@ class SquareRoutine : public rclcpp::Node
           
 		// Create the publisher
 		// Publisher to a topic named "topic". The size of the queue is 10 messages.
-		publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel",10);
+		publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("/model/tugbot/cmd_vel", 10);
       
 	  	// Create the timer
 	  	timer_ = this->create_wall_timer(100ms, std::bind(&SquareRoutine::timer_callback, this)); 	  
