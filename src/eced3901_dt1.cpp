@@ -56,6 +56,15 @@ class SquareRoutine : public rclcpp::Node
 		x_now = msg->pose.pose.position.x;
 		y_now = msg->pose.pose.position.y;
 		
+		tf2::Quaternion q(
+			msg->pose.pose.orientation.x,
+			msg->pose.pose.orientation.y,
+			msg->pose.pose.orientation.z,
+			msg->pose.pose.orientation.w
+		);
+		tf2::Matrix3x3 m(q);
+		m.getRPY(rol_now, pit_now, yaw_now);
+		
 		//RCLCPP_INFO(this->get_logger(), "Odom Acquired.");
 	}
 	
@@ -66,6 +75,12 @@ class SquareRoutine : public rclcpp::Node
 		// Calculate distance travelled from initial
 		d_now =	pow( pow(x_now - x_init, 2) + pow(y_now - y_init, 2), 0.5 );
 		
+		// Calculate rotation
+		double rot_now = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init)); // arctan(tan(x)) normalizes the angle into the range (-pi, pi)
+		double ang_err = atan2(sin(yaw_aim - rot_now), cos(yaw_aim - rot_now));
+		
+		//ROS_INFO("Current yaw: %f", yaw_now);
+		
 		// Keep moving if not reached last distance target
 		if (d_now < d_aim)
 		{
@@ -74,12 +89,22 @@ class SquareRoutine : public rclcpp::Node
 			publisher_->publish(msg);		
 		}
 		// If done step, stop
+		else if (rot_now < yaw_aim) { // Turn step (NOTE: NOT ROBUST! CANNOT HANDLE TURNS >=PI)
+			//Calculate turn speed from error
+			double vel;
+			if (ang_err > 0.1)
+				vel = ang_vel* ang_err;
+			msg.angular.z = vel;
+			publisher_->publish(msg);
+		}
 		else
 		{
 			msg.linear.x = 0; //double(rand())/double(RAND_MAX); //fun
 			msg.angular.z = 0; //2*double(rand())/double(RAND_MAX) - 1; //fun
 			publisher_->publish(msg);
 			last_state_complete = 1;
+			//rclcpp::Time t_init = this->get_clock()->now();
+			//while(ros::Time::now() < t_init + ros::Duration(1.0));
 		}
 
 
@@ -99,14 +124,9 @@ class SquareRoutine : public rclcpp::Node
 			    move_distance(1.0);
 			    break;
 			  case 1:
-			    move_distance(1.0);
+			    turn_rads(M_PI/2);
+			    count_ = 0;
 			    break;
-			  case 2:
-			    move_distance(1.0);
-			    break;
-			  case 3:
-			    move_distance(1.0);
-			    break; 
 			  default:
 			    break;
 			}
@@ -123,6 +143,13 @@ class SquareRoutine : public rclcpp::Node
 		last_state_complete = 0;	
 	}
 	
+	void turn_rads(double rads) {
+		yaw_aim = atan2(sin(rads), cos(rads)); // Normalize angle in (-pi, pi)
+		yaw_init = yaw_now;
+		count_++;
+		last_state_complete = 0;
+	}
+	
 
 	// Declaration of subscription_ attribute
 	rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr subscription_;
@@ -134,9 +161,10 @@ class SquareRoutine : public rclcpp::Node
 	rclcpp::TimerBase::SharedPtr timer_;
 	
 	// Declaration of Class Variables
-	double x_vel = 0.2;
+	double x_vel = 0.2, ang_vel = 0.2;
 	double x_now = 0, x_init = 0, y_now = 0, y_init = 0;
 	double d_now = 0, d_aim = 0;
+	double rol_now=0, pit_now=0, yaw_now=0, yaw_init=0, yaw_aim=0;
 	size_t count_ = 0;
 	int last_state_complete = 1;
 };
