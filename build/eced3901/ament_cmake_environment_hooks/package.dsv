@@ -1,0 +1,4 @@
+source;share/eced3901/local_setup.bash
+source;share/eced3901/local_setup.dsv
+source;share/eced3901/local_setup.sh
+source;share/eced3901/local_setup.zsh
