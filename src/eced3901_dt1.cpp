@@ -92,13 +92,14 @@ class SquareRoutine : public rclcpp::Node {
 		tf2::Matrix3x3 m(q);
 		m.getRPY(rol_now, pit_now, yaw_now);
 		
-		//RCLCPP_INFO(this->get_logger(), "Odom Acquired."); // <---- DEBUG PRINT SYNTAX 
+		//DEBUG PRINT SYNTAX 
+		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
 	}
 	
 	void timer_callback() {
 		geometry_msgs::msg::Twist msg;
 		
-		// Keep moving if not reached last distance target
+		// State machine
 		switch (state) {
 			case INIT: {
 				move_distance(1.0);
@@ -119,8 +120,7 @@ class SquareRoutine : public rclcpp::Node {
 					msg.linear.x = x_vel; 
 					msg.angular.z = 0;
 				}
-				RCLCPP_INFO(this->get_logger(), "Moving. Ang: %f", yaw_now);
-				publisher_->publish(msg);
+				//RCLCPP_INFO(this->get_logger(), "Moving. Ang: %f", yaw_now);
 				break;
 			}
 			case TURN: {
@@ -138,13 +138,11 @@ class SquareRoutine : public rclcpp::Node {
 					double vel = (ang_err > ang_vel_min)?(ang_err*ang_vel):(ang_vel_min*ang_vel);
 					msg.angular.z = vel;
 				}
-				publisher_->publish(msg);
 				break;
 			}
 			case WAIT: {
-				msg.linear.x = 0; //double(rand())/double(RAND_MAX); //fun
-				msg.angular.z = 0; //2*double(rand())/double(RAND_MAX) - 1; //fun
-				publisher_->publish(msg);
+				msg.linear.x = 0;
+				msg.angular.z = 0;
 				//RCLCPP_INFO(this->get_logger(), "waiting. Ticks: %d", ticks );
 				if ((ticks--) <= 0) { // Still waiting?
 					state = just_moved?TURN:MOVE;
@@ -153,7 +151,9 @@ class SquareRoutine : public rclcpp::Node {
 				break;
 			}
 		}
-		//RCLCPP_INFO(this->get_logger(), "Published cmd_vel.");
+		//RCLCPP_INFO(this->get_logger(), "linear: %f, %f, %f, angular: %f, %f, %f", msg.linear.x, msg.linear.y, msg.linear.z, msg.angular.x, msg.angular.y, msg.angular.z);
+		// Publish msg
+		publisher_->publish(msg);
 	}
 	
 	void sequence_statemachine() {
