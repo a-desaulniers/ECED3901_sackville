@@ -32,12 +32,10 @@ using std::placeholders::_1;
 
 // Create the node class named SquareRoutine
 // It inherits rclcpp::Node class attributes and functions
-class SquareRoutine : public rclcpp::Node
-{
+class SquareRoutine : public rclcpp::Node {
   public:
 	// Constructor creates a node named Square_Routine. 
-	SquareRoutine() : Node("Square_Routine")
-	{
+	SquareRoutine() : Node("Square_Routine") {
 		// Create the subscription
 		// The callback function executes whenever data is published to the 'topic' topic.
 		subscription_ = this->create_subscription<nav_msgs::msg::Odometry>("odom", 10, std::bind(&SquareRoutine::topic_callback, this, _1));
@@ -47,111 +45,11 @@ class SquareRoutine : public rclcpp::Node
 		publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel",10);
       
 	  	// Create the timer
-	  	timer_ = this->create_wall_timer(100ms, std::bind(&SquareRoutine::timer_callback, this)); 	  
+	  	timer_ = this->create_wall_timer(20ms, std::bind(&SquareRoutine::timer_callback, this)); 	 // Changed to 50Hz 
 	}
 
   private:
-	void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg)
-	{
-		x_now = msg->pose.pose.position.x;
-		y_now = msg->pose.pose.position.y;
-		
-		tf2::Quaternion q(
-			msg->pose.pose.orientation.x,
-			msg->pose.pose.orientation.y,
-			msg->pose.pose.orientation.z,
-			msg->pose.pose.orientation.w
-		);
-		tf2::Matrix3x3 m(q);
-		m.getRPY(rol_now, pit_now, yaw_now);
-		
-		//RCLCPP_INFO(this->get_logger(), "Odom Acquired.");
-	}
-	
-	void timer_callback()
-	{
-		geometry_msgs::msg::Twist msg;
-        	
-		// Calculate distance travelled from initial
-		d_now =	pow( pow(x_now - x_init, 2) + pow(y_now - y_init, 2), 0.5 );
-		
-		// Calculate rotation
-		double rot_now = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init)); // arctan(tan(x)) normalizes the angle into the range (-pi, pi)
-		double ang_err = atan2(sin(yaw_aim - rot_now), cos(yaw_aim - rot_now));
-		
-		//ROS_INFO("Current yaw: %f", yaw_now);
-		
-		// Keep moving if not reached last distance target
-		if (d_now < d_aim)
-		{
-			msg.linear.x = x_vel; 
-			msg.angular.z = 0;
-			publisher_->publish(msg);		
-		}
-		// If done step, stop
-		else if (rot_now < yaw_aim) { // Turn step (NOTE: NOT ROBUST! CANNOT HANDLE TURNS >=PI)
-			//Calculate turn speed from error
-			double vel;
-			if (ang_err > 0.1)
-				vel = ang_vel* ang_err;
-			msg.angular.z = vel;
-			publisher_->publish(msg);
-		}
-		else
-		{
-			msg.linear.x = 0; //double(rand())/double(RAND_MAX); //fun
-			msg.angular.z = 0; //2*double(rand())/double(RAND_MAX) - 1; //fun
-			publisher_->publish(msg);
-			last_state_complete = 1;
-			//rclcpp::Time t_init = this->get_clock()->now();
-			//while(ros::Time::now() < t_init + ros::Duration(1.0));
-		}
-
-
-		sequence_statemachine();		
-		
-
-		//RCLCPP_INFO(this->get_logger(), "Published cmd_vel.");
-	}
-	
-	void sequence_statemachine()
-	{
-		if (last_state_complete == 1)
-		{
-			switch(count_) 
-			{
-			  case 0:
-			    move_distance(1.0);
-			    break;
-			  case 1:
-			    turn_rads(M_PI/2);
-			    count_ = 0;
-			    break;
-			  default:
-			    break;
-			}
-		}			
-	}
-	
-	// Set the initial position as where robot is now and put new d_aim in place	
-	void move_distance(double distance)
-	{
-		d_aim = distance;
-		x_init = x_now;
-		y_init = y_now;		
-		count_++;		// advance state counter
-		last_state_complete = 0;	
-	}
-	
-	void turn_rads(double rads) {
-		yaw_aim = atan2(sin(rads), cos(rads)); // Normalize angle in (-pi, pi)
-		yaw_init = yaw_now;
-		count_++;
-		last_state_complete = 0;
-	}
-	
-
-	// Declaration of subscription_ attribute
+ 	 // Declaration of subscription_ attribute
 	rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr subscription_;
          
 	// Declaration of publisher_ attribute      
@@ -165,16 +63,135 @@ class SquareRoutine : public rclcpp::Node
 	double x_now = 0, x_init = 0, y_now = 0, y_init = 0;
 	double d_now = 0, d_aim = 0;
 	double rol_now=0, pit_now=0, yaw_now=0, yaw_init=0, yaw_aim=0;
-	size_t count_ = 0;
-	int last_state_complete = 1;
+	const double ang_vel_min = 0.5; // minimum angular velocity multiplier
+	const double lin_tol=0.01, ang_tol=0.02; // Linear and angular tolerances (1cm and ~1 degree)
+	int ticks = 0; // ticks to wait
+	const int wait_ticks=100; // 25 = 500ms
+	bool just_moved = 0;
+	
+	// States enum
+	enum State {
+		INIT,
+		MOVE,
+		TURN,
+		WAIT
+	};
+	enum State state = INIT;
+
+	// Functions
+	void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
+		x_now = msg->pose.pose.position.x;
+		y_now = msg->pose.pose.position.y;
+		
+		tf2::Quaternion q(
+			msg->pose.pose.orientation.x,
+			msg->pose.pose.orientation.y,
+			msg->pose.pose.orientation.z,
+			msg->pose.pose.orientation.w
+		);
+		tf2::Matrix3x3 m(q);
+		m.getRPY(rol_now, pit_now, yaw_now);
+		
+		//RCLCPP_INFO(this->get_logger(), "Odom Acquired."); // <---- DEBUG PRINT SYNTAX 
+	}
+	
+	void timer_callback() {
+		geometry_msgs::msg::Twist msg;
+		
+		// Keep moving if not reached last distance target
+		switch (state) {
+			case INIT: {
+				move_distance(1.0);
+				state = MOVE;
+				break;
+			}
+			case MOVE: {
+				// Calculate distance travelled from initial
+				d_now =	pow( pow(x_now - x_init, 2) + pow(y_now - y_init, 2), 0.5 );
+				double d_err = d_aim - d_now;
+				if (d_err < lin_tol) { // Check if within tolerance
+					msg.linear.x = 0;
+					msg.angular.z = 0;
+					ticks = wait_ticks;
+					state = WAIT;
+					just_moved = 1;
+				} else {
+					msg.linear.x = x_vel; 
+					msg.angular.z = 0;
+				}
+				RCLCPP_INFO(this->get_logger(), "Moving. Ang: %f", yaw_now);
+				publisher_->publish(msg);
+				break;
+			}
+			case TURN: {
+				// Calculate rotation
+				double rot_now = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init)); // arctan(tan(x)) normalizes the angle into the range (-pi, pi)
+				double ang_err = atan2(sin(yaw_aim - rot_now), cos(yaw_aim - rot_now)); // CANT HANDLE CW TURNS
+				//RCLCPP_INFO(this->get_logger(), "Turning. Ang: %f, Ang err: %f", yaw_now, ang_err);
+				if (ang_err < ang_tol) { // Close enough
+					msg.angular.z = 0;
+					ticks = wait_ticks;
+					state = WAIT;
+					just_moved = 0;
+					
+				} else {
+					double vel = (ang_err > ang_vel_min)?(ang_err*ang_vel):(ang_vel_min*ang_vel);
+					msg.angular.z = vel;
+				}
+				publisher_->publish(msg);
+				break;
+			}
+			case WAIT: {
+				msg.linear.x = 0; //double(rand())/double(RAND_MAX); //fun
+				msg.angular.z = 0; //2*double(rand())/double(RAND_MAX) - 1; //fun
+				publisher_->publish(msg);
+				//RCLCPP_INFO(this->get_logger(), "waiting. Ticks: %d", ticks );
+				if ((ticks--) <= 0) { // Still waiting?
+					state = just_moved?TURN:MOVE;
+					sequence_statemachine();	
+				}
+				break;
+			}
+		}
+		//RCLCPP_INFO(this->get_logger(), "Published cmd_vel.");
+	}
+	
+	void sequence_statemachine() {
+			switch(state) {
+			  case MOVE:
+			    move_distance(1.0);
+			    break;
+			  case TURN:
+			    turn_rads(M_PI/2);
+			    break;
+			  default:
+			    break;
+			}			
+	}
+	
+	// Set the initial position as where robot is now and put new d_aim in place	
+	void move_distance(double distance) {
+		d_aim = distance;
+		x_init = x_now;
+		y_init = y_now;		
+		//state = MOVE;	
+	}
+	
+	void turn_rads(double rads) {
+		yaw_aim = atan2(sin(rads), cos(rads)); // Normalize angle in (-pi, pi)
+		yaw_init = yaw_now;
+		//state = TURN;
+	}
+	
+
+	
 };
     	
 
 
 //------------------------------------------------------------------------------------
 // Main code execution
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
 	// Initialize ROS2
 	rclcpp::init(argc, argv);
   
