@@ -1,3 +1,7 @@
+IMPORTANT: Tests were performed on a table, where friction is slightly different from course.
+This discrepancy is minor compared to the "Design I Problem" (Robot veers in upredictable ways while in motion).
+Finally, I should implement easing on the start of motion, as having the robot abruptly start with the highest velocity is an error-prone behaviour.
+
 Turn velocity testing (PI/2 CCW, tolerance of 0.04 Rad):
 Vel - Pass/Marginal/Fail - comments
 
@@ -40,3 +44,4 @@ Vel - Pass/Marginal/Fail - Error (cm) - comments
 0.1 3 more times. Error: 0.2, -0.1, -0.2
 
 0.1 selected for minimum velocity, as it is highly accurate at 1cm tolerance
+

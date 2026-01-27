@@ -59,14 +59,16 @@ class SquareRoutine : public rclcpp::Node {
 	rclcpp::TimerBase::SharedPtr timer_;
 	
 	// Declaration of Class Variables
-	double x_vel = 0.2, ang_vel = 0.2;
+	double lin_vel_g = 0.3, ang_vel_g = 0.3; // Velocity gains
 	double x_now = 0, x_init = 0, y_now = 0, y_init = 0;
 	double d_now = 0, d_aim = 0;
 	double rol_now=0, pit_now=0, yaw_now=0, yaw_init=0, yaw_aim=0;
-	const double ang_vel_min = 0.5; // minimum angular velocity multiplier
+	const double lin_vel_min = 0.1; // minimum linear velocity
+	const double ang_vel_min = 0.2; // minimum angular velocity
 	const double lin_tol=0.01, ang_tol=0.02; // Linear and angular tolerances (1cm and ~1 degree)
 	int ticks = 0; // ticks to wait
-	const int wait_ticks=100; // 25 = 500ms
+	int move_count = 0; // Number of movements, used to determine stop state
+	const int wait_ticks=25; // 25 = 500ms, 50 = 1s
 	bool just_moved = 0;
 	
 	// States enum
@@ -74,7 +76,8 @@ class SquareRoutine : public rclcpp::Node {
 		INIT,
 		MOVE,
 		TURN,
-		WAIT
+		WAIT, 
+		STOP
 	};
 	enum State state = INIT;
 
@@ -113,11 +116,19 @@ class SquareRoutine : public rclcpp::Node {
 				if (d_err < lin_tol) { // Check if within tolerance
 					msg.linear.x = 0;
 					msg.angular.z = 0;
+					if (++move_count >=4) { // Check if square finished
+						state = STOP;
+						break;
+					}
 					ticks = wait_ticks;
 					state = WAIT;
 					just_moved = 1;
 				} else {
-					msg.linear.x = x_vel; 
+					// Compute velocity
+					double vel = lin_vel_g * d_err;
+					if (vel < lin_vel_min) vel = lin_vel_min;
+					RCLCPP_INFO(this->get_logger(), "Linear Velocity: %f", vel);
+					msg.linear.x = vel; 
 					msg.angular.z = 0;
 				}
 				//RCLCPP_INFO(this->get_logger(), "Moving. Ang: %f", yaw_now);
@@ -135,7 +146,11 @@ class SquareRoutine : public rclcpp::Node {
 					just_moved = 0;
 					
 				} else {
-					double vel = (ang_err > ang_vel_min)?(ang_err*ang_vel):(ang_vel_min*ang_vel);
+					// Compute angular velocity
+					// TODO: Eliminate directional bias, implement overshoot correction?
+					double vel = ang_err * ang_vel_g;
+					if (vel < ang_vel_min) vel = ang_vel_min;
+					RCLCPP_INFO(this->get_logger(), "Angular Velocity: %f", vel);
 					msg.angular.z = vel;
 				}
 				break;
@@ -149,6 +164,10 @@ class SquareRoutine : public rclcpp::Node {
 					sequence_statemachine();	
 				}
 				break;
+			}
+			case STOP: {
+				msg.linear.x = 0;
+				msg.angular.z = 0;
 			}
 		}
 		//RCLCPP_INFO(this->get_logger(), "linear: %f, %f, %f, angular: %f, %f, %f", msg.linear.x, msg.linear.y, msg.linear.z, msg.angular.x, msg.angular.y, msg.angular.z);
