@@ -1,0 +1,42 @@
+Turn velocity testing (PI/2 CCW, tolerance of 0.04 Rad):
+Vel - Pass/Marginal/Fail - comments
+
+0.10 - F - Too slow, motors stutter
+0.15 - F - " 
+0.20 - F - Barely too slow, somehow rotated PI instead of PI/2
+0.25 - M - Minimal stuttering, turned correct distance
+0.30 - P - No stuttering, but turned way too far on 2/6 attempts somehow
+0.35 - P - No stuttering anymore, turned about PI/2 on 3/3 attempts
+0.40 - P - 3/3
+0.50 - M - Turned very slightly too far on 2/3 attempts
+0.60 - M - "
+0.70 - F - Turned too far on 3/3
+
+Slow speed = More accuracy. Too low = stuttering -> jerking slightly
+Fast speed = More overshoot.
+I will select 0.25 as the optimal minimum speed, as it barely avoids stuttering while achieving high precision
+NOTE: The tolerance should probably be adjusted to work well with the minimum speed
+
+some odometry data is preserved between program calls, so restart dalmotor or code in a fix
+
+Linear Velocity Testing (30cm motion, tolerance of 1cm):
+Vel - Pass/Marginal/Fail - Error (cm) - comments
+
+0.01 - F - N/A - Motors stutter, zig-zags robot
+0.02 - F - N/A - "
+0.03 - M - 2.5 - ", but less. Turned slightly during motion.
+0.04 - M - 2.2 - "
+0.05 - M - 1.7 - Barely turned CW (~1 degree)
+0.06 - P - 1.6 - Barely turned CW, <1 degree
+0.07 - P - 1.7 - "
+// Consistent error ~1.7?
+0.08 - P - 0.8 - Significantly less error, no visible turn
+0.09 - P - -0.2 - Overshot
+0.10 - P - 0.2 - Very accurate!
+0.11 - P - 0.1 - Turned CW very slightly, could be human error
+0.12 - M - -0.7 - Overshot by a fair bit
+0.15 - F - -1.6 -Significant overshoot
+
+0.1 3 more times. Error: 0.2, -0.1, -0.2
+
+0.1 selected for minimum velocity, as it is highly accurate at 1cm tolerance
