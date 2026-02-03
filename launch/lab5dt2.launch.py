@@ -160,7 +160,7 @@ def generate_launch_description():
         target_action=start_square_routine, # This is your C++ node from earlier
         on_exit=[save_map_cmd],
     )
-)
+  )
 
   # Create the launch description and populate
   ld = LaunchDescription()

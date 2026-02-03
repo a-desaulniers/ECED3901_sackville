@@ -105,6 +105,13 @@ class SquareRoutine : public rclcpp::Node {
 		// State machine
 		switch (state) {
 			case INIT: {
+				// Wait for robot to be ready
+				if (this->count_publishers("/odom") == 0) {
+   					RCLCPP_INFO(this->get_logger(), "Waiting for hardware (/odom)...");
+    				break;
+				}
+				RCLCPP_INFO(this->get_logger(), "Hardware ready! Starting square.");
+
 				move_distance(1.0);
 				state = MOVE;
 				break;
