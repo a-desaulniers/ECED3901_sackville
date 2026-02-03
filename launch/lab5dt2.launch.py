@@ -130,6 +130,16 @@ def generate_launch_description():
                         'params_file': params_file,
                         'default_bt_xml_filename': default_bt_xml_filename,
                         'autostart': autostart}.items())
+  
+
+  # Start square routine
+  start_square_routine = Node(
+    package='eced3901',
+    executable='dt1',
+    name='square_routine',
+    output='screen',
+    parameters=[{'use_sim_time': use_sim_time}]
+  )
 
   # Create the launch description and populate
   ld = LaunchDescription()
@@ -151,6 +161,7 @@ def generate_launch_description():
   # Add any actions
   ld.add_action(start_rviz_cmd)
   ld.add_action(start_ros2_navigation_cmd)
+  ld.add_action(start_square_routine)
 
   return ld
 
