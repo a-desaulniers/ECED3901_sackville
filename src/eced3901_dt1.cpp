@@ -61,9 +61,10 @@ class SquareRoutine : public rclcpp::Node {
 	// Declaration of Class Variables
 	double lin_vel_g = 0.3, ang_vel_g = 0.3; // Velocity gains
 	double x_now = 0, x_init = 0, y_now = 0, y_init = 0;
-	double d_now = 0, d_aim = 0;
+	double d_aim = 0;
 	double rol_now=0, pit_now=0, yaw_now=0, yaw_init=0, yaw_aim=0;
-	const double lin_vel_min = 0.1; // minimum linear velocity
+	const double lin_vel_min = 0.1, lin_acc_max = 0.01; // minimum linear velocity, max acceleration per tick.
+	double lin_vel_now = 0;
 	const double ang_vel_min = 0.2; // minimum angular velocity
 	const double lin_tol=0.01, ang_tol=0.02; // Linear and angular tolerances (1cm and ~1 degree)
 	int ticks = 0; // ticks to wait
@@ -118,11 +119,12 @@ class SquareRoutine : public rclcpp::Node {
 			}
 			case MOVE: {
 				// Calculate distance travelled from initial
-				d_now =	pow( pow(x_now - x_init, 2) + pow(y_now - y_init, 2), 0.5 );
+				double d_now =	pow( pow(x_now - x_init, 2) + pow(y_now - y_init, 2), 0.5 );
 				double d_err = d_aim - d_now;
 				if (d_err < lin_tol) { // Check if within tolerance
 					msg.linear.x = 0;
 					msg.angular.z = 0;
+					lin_vel_now = 0;
 					if (++move_count >=4) { // Check if square finished
 						state = STOP;
 						break;
@@ -132,11 +134,18 @@ class SquareRoutine : public rclcpp::Node {
 					just_moved = 1;
 				} else {
 					// Compute velocity
-					double vel = lin_vel_g * d_err;
-					if (vel < lin_vel_min) vel = lin_vel_min;
+					double target_vel = lin_vel_g * d_err;
+					double vel = lin_vel_now;
+					// Easing
+					if (target_vel < lin_vel_min) vel = lin_vel_min;
+					else if (target_vel > vel) vel += lin_acc_max;
+					else if (target_vel < vel) vel -= lin_acc_max;
+					else vel = target_vel;
+
 					RCLCPP_INFO(this->get_logger(), "Linear Velocity: %f", vel);
 					msg.linear.x = vel; 
 					msg.angular.z = 0;
+					lin_vel_now = vel;
 				}
 				//RCLCPP_INFO(this->get_logger(), "Moving. Ang: %f", yaw_now);
 				break;
