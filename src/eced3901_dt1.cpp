@@ -168,6 +168,8 @@ class SquareRoutine : public rclcpp::Node {
 			case STOP: {
 				msg.linear.x = 0;
 				msg.angular.z = 0;
+				publisher_->publish(msg);
+				rclcpp::shutdown();
 			}
 		}
 		//RCLCPP_INFO(this->get_logger(), "linear: %f, %f, %f, angular: %f, %f, %f", msg.linear.x, msg.linear.y, msg.linear.z, msg.angular.x, msg.angular.y, msg.angular.z);
@@ -218,7 +220,7 @@ int main(int argc, char * argv[]) {
 	rclcpp::spin(std::make_shared<SquareRoutine>());
  
 	// Stop node 
-	rclcpp::shutdown();
+	//rclcpp::shutdown();
 	return 0;
 }
 

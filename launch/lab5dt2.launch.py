@@ -12,6 +12,9 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+# For map saving:
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 
 def generate_launch_description():
 
@@ -27,6 +30,9 @@ def generate_launch_description():
   nav2_params_path = os.path.join(pkg_share, 'params', 'nav2_params.yaml')
   nav2_bt_path = FindPackageShare(package='nav2_bt_navigator').find('nav2_bt_navigator')
   behavior_tree_xml_path = os.path.join(nav2_bt_path, 'behavior_trees', 'navigate_w_replanning_and_recovery.xml')
+
+  # Map path
+  repo_path = '/home/student/ros2_ws/src/eced3901'
   
   # Launch configuration variables specific to simulation
   autostart = LaunchConfiguration('autostart')
@@ -141,6 +147,21 @@ def generate_launch_description():
     parameters=[{'use_sim_time': use_sim_time}]
   )
 
+  # Save map
+  save_map_cmd = Node(
+    package='nav2_map_server',
+    executable='map_saver_cli',
+    output='screen',
+    arguments=['-f', os.path.join(repo_path, 'maps', 'dt2_map')]
+  )
+
+  save_map_on_exit = RegisterEventHandler(
+    event_handler=OnProcessExit(
+        target_action=start_square_routine, # This is your C++ node from earlier
+        on_exit=[save_map_cmd],
+    )
+)
+
   # Create the launch description and populate
   ld = LaunchDescription()
 
@@ -161,7 +182,9 @@ def generate_launch_description():
   # Add any actions
   ld.add_action(start_rviz_cmd)
   ld.add_action(start_ros2_navigation_cmd)
+  # Square then save map
   ld.add_action(start_square_routine)
+  ld.add_action(save_map_on_exit)
 
   return ld
 
