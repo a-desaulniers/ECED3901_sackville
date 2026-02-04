@@ -12,6 +12,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch.actions import TimerAction
 
 def generate_launch_description():
 
@@ -136,6 +137,11 @@ def generate_launch_description():
     parameters=[{'use_sim_time': use_sim_time}]
   )
 
+  delayed_dt1_node = TimerAction(
+    period=3.0,
+    actions=[start_square_routine]
+)
+
   
   # Create the launch description and populate
   ld = LaunchDescription()
@@ -160,7 +166,7 @@ def generate_launch_description():
   ld.add_action(start_rviz_cmd)
 
   # Make it do DT1 automatically
-  ld.add_action(start_square_routine)
+  ld.add_action(delayed_dt1_node)
 
   return ld
 
