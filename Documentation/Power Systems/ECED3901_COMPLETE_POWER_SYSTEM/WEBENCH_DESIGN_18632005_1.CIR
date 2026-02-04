@@ -1,0 +1,1060 @@
+***
+*$
+*TPS61288RQQR
+*****************************************************************************
+* (C) Copyright 2013 Texas Instruments Incorporated. All rights reserved.
+*****************************************************************************
+** This model is designed as an aid for customers of Texas Instruments.
+** TI and its licensors and suppliers make no warranties, either expressed
+** or implied, with respect to this model, including the warranties of
+** merchantability or fitness for a particular purpose. The model is
+** provided solely on an "as is" basis. The entire risk as to its quality
+** and performance is with the customer
+*****************************************************************************
+*
+** Released by: WEBENCH(R) Design Center, Texas Instruments Inc.
+* Part: TPS61288RQQR
+* Model Type: Transient
+* Simulator: TINA
+* Model Version: Final 1.00
+*
+*****************************************************************************
+*
+* Updates:
+*
+* Final 1.00
+* Release to Web.
+*
+***************************************************************************
+
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ FB COMP PGND SW VOUT EN VIN BOOT SW_0 AGND VCC PARAMS: SS=0
+R_SW SW_0 PGND 1e9
+X_U7 GATE_L OVP_N N07039 MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+X_U3 AGND SDWN SS VREF MAIN_BLOCK_U1_WB_TPS61288RQQ_SOFTSTART
+X_U4 BOOT EN OVP SDWN SDWN_N VCC VCC_OK VIN VOUT MAIN_BLOCK_U1_WB_TPS61288RQQ_HK
+X_U5 CLIMT COMP GATE_H GATE_L AGND ISENSE ISENSE_A SDWN_N SSEND SW VCC VIN VOUT VREF ZCD_N MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER
+X_U2 COMP FB PGND VCC_OK VREF MAIN_BLOCK_U1_WB_TPS61288RQQ_ERROR_AMP
+X_U6 OVP_N GATE_H N06943 MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+X_U8 OVP OVP_N MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=500E-3
+X_U1 COMP N06943 N07039 PGND ISENSE ISENSE_A SW VOUT ZCD_N MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER COMP GATE_H GATE_L GND ISENSE ISENSE_A SW VOUT ZCD_N
+X_U13 N405055 N405083 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5 DELAY=10n
+*R_R1         N4152221 VOUT  0.01
+X_U15 N405055 N405083 HDRV MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+E_ABM4         N435296 0 VALUE { IF(V(ISW) > V(N437569),0,1)    }
+R_R2 N441382 GND 1Meg
+V_V1         N437569 GND 15m
+X_U17 GATE_H GATE_L_N N405055 MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+X_U12 N405001 N405029 LDRV MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+*X_D5         N400649 N4152221 d_d1 PARAMS:
+X_D5 N400649 VOUT MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+X_U10 N405001 N405029 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5 DELAY=10n
+X_U8 GATE_H GATE_H_N MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=500E-3
+X_U19 N435296 LDRV N441382 ZCD_N MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_GEN  PARAMS: VDD=1   VSS=0 VTHRESH=0.5
+X_S2 HDRV GND VOUT N400649 MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_S2
+X_U16 GATE_L GATE_L_N MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=500E-3
+X_U14 GATE_L GATE_H_N N405001 MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+X_H2 SW N400649 ISW GND MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_H2
+X_H1 N400589 GND ISENSE_A GND MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_H1
+X_D1 N400589 SW MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+X_S1 LDRV GND SW N400589 MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_S1
+X_U20 ZCD_N ZCD MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=500E-3
+E_E1         ISENSE GND ISENSE_A GND 0.066
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_ERROR_AMP COMP FB GND VCC_OK VREF
+R_Rea GND COMP 500Meg
+V_V4         N16811707 GND 0.55
+V_V3         COMP_HH GND 1.88
+G_ABM2I1         GND COMP VALUE { IF(V(VCC_OK) > 0.5,{LIMIT((V(VREF) -   V(FB))*180u,-20u,20u)},0)    }
+X_U3 N16811707 COMP MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D
+G_ABM2I7         COMP 0 VALUE { {LIMIT((V(COMP) - V(COMP_HH))*5m, 0,10)}    }
+C_C1 GND COMP 1p IC=0
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER CLMIT COMP GATE_H GATE_L GND ISENSE ISENSE_A SDWN_N SSEND SW   VCC VIN VOUT VREF   
++ ZCD_N
+X_H1 FSW N01584 IFSW GND MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER_H1
+C_C2 GND N03030 1n
+C_C4 GND PVIN 5p
+X_U12 N16813968 N03030 N16814474 MAIN_BLOCK_U1_WB_TPS61288RQQ_OR2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+X_U5 ISENSE_A N17050896 N16813968 MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+X_U19 N16943616 N16943616 SDWN_N ZCD_N GATE_H MAIN_BLOCK_U1_WB_TPS61288RQQ_AND4_BASIC_GEN  PARAMS:   VDD=1 VSS=0 VTHRESH=500E-3
+X_U20 SDWN_N SDWN_N N02560 GATE_L MAIN_BLOCK_U1_WB_TPS61288RQQ_AND3_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+C_C7 GND TOFF 1n
+C_C1 GND N01584 39p
+R_R4 GND N13142 800k
+R_R6 N13983 PVIN 3Meg
+X_S2 ON GND N13983 N13142 MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER_S2
+C_C3 GND N13983 5p
+X_S3 ON GND PVIN N13983 MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER_S3
+X_U2 TOFF N16814474 N02560 N16943616 MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_GEN  PARAMS: VDD=1   VSS=0 VTHRESH=0.5
+X_U1 N01584 PVIN N16903113 MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+R_R9 N16903113 TOFF {90/0.693}
+X_U3 N020520 COMP N03281 MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+R_R5 N13142 N13983 3Meg
+R_R2 N03281 N03030 {70/0.693}
+R_R3 N13142 SW 5.6Meg
+V_V4         N17064249 GND 0.8
+V_V2         N020520 ISENSE 0.613
+V_V3         N17052086 GND 0.85
+G_ABM2I8         N01584 GND VALUE { If(V(GATE_L)>0.5,1,0)    }
+X_D1 GND N01584 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+G_ABM2I7         N17052059 GND VALUE { {LIMIT((V(N17052086) -   V(COMP))*0.04m*V(PVIN)/0.415,0,0.1m)}    }
+G_ABM2I9         N17052059 GND VALUE { {LIMIT((V(N17064249) -   V(COMP))*0.03m*V(PVIN)/0.415,0,0.1m)}    }
+R_R7 FSW SW 317k TC=0,0
+V_V1         N17050896 GND 16
+X_F1 N17052059 N01584 COMP GND MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER_F1
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_HK BOOT EN OVP SDWN SDWN_N VCC VCC_OK VIN VOUT
+X_U79 UVLO VCC_OK N16766365 MAIN_BLOCK_U1_WB_TPS61288RQQ_OR2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+V_V9         N391393 0 0.1
+E_ABM4         N16769079 0 VALUE { IF(V(EN_OK)   >0.5,MAX(V(VOUT),V(VIN)),Min(4,V(VIN)-0.7))    }
+X_U70 EN N38699 N386613 EN_OK MAIN_BLOCK_U1_WB_TPS61288RQQ_COMPHYS_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+X_U71 VCC N39177 N391393 VCC_OK MAIN_BLOCK_U1_WB_TPS61288RQQ_COMPHYS_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+C_C1 0 SDWN_N 1n
+V_V5         N383333 0 0.4
+V_V12         N16782836 0 19
+X_U73 VOUT N16782836 N167790233 OVP MAIN_BLOCK_U1_WB_TPS61288RQQ_COMPHYS_BASIC_GEN  PARAMS: VDD=1   VSS=0 VTHRESH=0.5
+V_V4         N38371 0 2.3
+R_R3 0 EN 800k
+V_V7         N386613 0 0.8
+X_U75 VCC BOOT MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D
+V_V6         N38699 0 1.2
+X_U74 SDWN_N SDWN MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=500E-3
+V_V13         N167790233 0 0.6
+V_V8         N39177 0 2
+X_U69 VIN N38371 N383333 UVLO MAIN_BLOCK_U1_WB_TPS61288RQQ_COMPHYS_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+X_U77 N16766365 EN_OK N16770346 MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+E_ABM3         VCC 0 VALUE { IF(V(N16769079) > 5,5,V(N16769079))    }
+R_R1 N16770346 SDWN_N 10
+X_U80 0 VCC MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SOFTSTART GND SDWN SS VREF
+G_ABMII1         N00083 SS VALUE { IF(V(SDWN) > 0.5, 0, 6u)    }
+V_V1         N00083 GND 0.612
+.IC         V(SS)=0
+E_ABM1         VREF 0 VALUE { IF(V(SS) >0.6, 0.6, V(SS))    }
+X_D1 SS N00083 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+X_S1 SDWN GND SS GND MAIN_BLOCK_U1_WB_TPS61288RQQ_SOFTSTART_S1
+C_C17 0 SS 30n IC=0
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_S2 1 2 3 4
+S_S2 3 4 1 2 _S2
+RS_S2 1 2 1G
+.MODEL         _S2 VSWITCH Roff=1e9 Ron=13m Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_H2 1 2 3 4
+H_H2         3 4 VH_H2 1
+VH_H2         1 2 0V
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_H1 1 2 3 4
+H_H1         3 4 VH_H1 1
+VH_H1         1 2 0V
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_S1 1 2 3 4
+S_S1 3 4 1 2 _S1
+RS_S1 1 2 1G
+.MODEL         _S1 VSWITCH Roff=1e9 Ron=11m Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER_H1 1 2 3 4
+H_H1         3 4 VH_H1 1
+VH_H1         1 2 0V
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER_S2 1 2 3 4
+S_S2 3 4 1 2 _S2
+RS_S2 1 2 1G
+.MODEL         _S2 VSWITCH Roff=1e9 Ron=1m Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER_S3 1 2 3 4
+S_S3 3 4 1 2 _S3
+RS_S3 1 2 1G
+.MODEL         _S3 VSWITCH Roff=1e9 Ron=1m Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_OFF_TIMER_F1 1 2 3 4
+*F_F1         3 4 VF_F1 0.0415/0
+F_F1         3 4 VF_F1 0
+VF_F1         1 2 0V
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_SOFTSTART_S1 1 2 3 4
+S_S1 3 4 1 2 _S1
+RS_S1 1 2 1G
+.MODEL         _S1 VSWITCH Roff=1e9 Ron=4k Voff=0.2 Von=0.5
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 1 2
+
+d1 1 2 MAIN_BLOCK_U1_WB_TPS61288RQQ_DD1
+
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_DD1 d  is=1e-15  tt=1e-11  rs=0.05  n=0.1
+
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D 1 2
+
+d1 1 2 MAIN_BLOCK_U1_WB_TPS61288RQQ_DD
+
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_DD d  is=1e-15  n=0.0001  tt=1e-11  rs=0.005
+
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN A Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH} ,  {VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_DELAY_BASIC_GEN A Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5 DELAY = 10n
+E_ABMGATE1    YINT1 0 VALUE {{IF(V(A) > {VTHRESH} ,  {VDD},{VSS})}}
+RINT YINT1 YINT2 1
+CINT YINT2 0 {DELAY*1.3}
+E_ABMGATE2    YINT3 0 VALUE {{IF(V(YINT2) > {VTHRESH} ,  {VSS},{VDD})}}
+RINT2 YINT3 Y 1
+CINT2 Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN A B Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  &  V(B) > {VTHRESH},{VDD},{VSS})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_AND3_BASIC_GEN A B C Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  &  V(B) > {VTHRESH} &  V(C) > {VTHRESH},{VDD},{VSS})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_AND4_BASIC_GEN A B C D Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  &  V(B) > {VTHRESH} &  V(C) > {VTHRESH} &  V(D) > {VTHRESH},{VDD},{VSS})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_NAND2_BASIC_GEN A B Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  &  V(B) > {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_NAND3_BASIC_GEN A B C Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  &  V(B) > {VTHRESH} &  V(C) > {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_NAND4_BASIC_GEN A B C D Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  &  V(B) > {VTHRESH} &  V(C) > {VTHRESH} &  V(D) > {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_NOR2_BASIC_GEN A B Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  |  V(B) > {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_NOR3_BASIC_GEN A B C Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  |  V(B) > {VTHRESH} |  V(C) > {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_NOR4_BASIC_GEN A B C D Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  |  V(B) > {VTHRESH} |  V(C) > {VTHRESH} |  V(D) > {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_NOR5_BASIC_GEN A B C D E Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE YINT 0 VALUE {{IF(V(A) > {VTHRESH}  |  V(B) > {VTHRESH} |  V(C) > {VTHRESH} |  V(D) > {VTHRESH} |  V(E) >   
++ {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_NOR6_BASIC_GEN A B C D E F Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE YINT 0 VALUE {{IF(V(A) > {VTHRESH}  |  V(B) > {VTHRESH} |  V(C) > {VTHRESH} |  V(D) > {VTHRESH} |  V(E) > {VTHRESH} |    
++ V(F) > {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_OR2_BASIC_GEN A B Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  |  V(B) > {VTHRESH},{VDD},{VSS})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_OR3_BASIC_GEN A B C Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  |  V(B) > {VTHRESH} |  V(C) > {VTHRESH},{VDD},{VSS})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_OR4_BASIC_GEN A B C D Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH}  |  V(B) > {VTHRESH} |  V(C) > {VTHRESH} |  V(D) > {VTHRESH},{VDD},{VSS})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_XNOR2_BASIC_GEN A B Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE  YINT 0 VALUE {{IF(V(A) > {VTHRESH}  ^  V(B) > {VTHRESH},{VSS},{VDD})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_XOR2_BASIC_GEN A B Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE  YINT 0 VALUE {{IF(V(A) > {VTHRESH}  ^  V(B) > {VTHRESH},{VDD},{VSS})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_BASIC_GEN A Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE    YINT 0 VALUE {{IF(V(A) > {VTHRESH} ,  {VDD},{VSS})}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN A Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5 DELAY = 10n
+E_ABMGATE1    YINT1 0 VALUE {{IF(V(A) > {VTHRESH} ,  {VDD},{VSS})}}
+RINT YINT1 YINT2 1
+CINT YINT2 0 {DELAY*1.3}
+E_ABMGATE2    YINT3 0 VALUE {{IF(V(YINT2) > {VTHRESH} ,  {VDD},{VSS})}}
+RINT2 YINT3 Y 1
+CINT2 Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN INP INM Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABM Yint 0 VALUE {IF (V(INP) >  V(INM), {VDD},{VSS})}
+R1 Yint Y 1
+C1 Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_COMPHYS2_BASIC_GEN INP INM HYS OUT PARAMS: VDD=1 VSS=0 VTHRESH=0.5  T=10
+EIN INP1 INM1 INP INM 1
+EHYS INM2 INM1 VALUE { IF( V(1) > {VTHRESH},-V(HYS)/2,V(HYS)/2) }
+EOUT OUT 0 VALUE { IF( V(INP1)>V(INM2), {VDD} ,{VSS}) }
+R1 OUT 1 1
+C1 1 0 {T*1e-9}
+RINP1 INP1 0 10K
+RINM2 INM2 0 10K
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_COMPHYS_BASIC_GEN INP INM HYS OUT PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+EIN INP1 INM1 INP INM 1
+EHYS INP1 INP2 VALUE { IF( V(1) > {VTHRESH},-V(HYS),0) }
+EOUT OUT 0 VALUE { IF( V(INP2)>V(INM1), {VDD} ,{VSS}) }
+R1 OUT 1 1
+C1 1 0 5n
+RINP1 INP1 0 1K
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_MUX2_BASIC_GEN A B S Y PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+E_ABMGATE  YINT 0 VALUE {{IF(V(S) > {VTHRESH},  V(B),V(A))}}
+RINT YINT Y 1
+CINT Y 0 1n
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT IN OUT PARAMS: T=100
+S_S1 MEAS 0 RESET2 0 S1
+E_ABM1         CH 0 VALUE { IF( V(IN)>0.5 | V(OUT)>0.5,1,0)    }
+R_R2 RESET2 RESET 0.1
+E_ABM3         OUT 0 VALUE { IF( V(MEAS)<0.5 & V(CH)>0.5,1,0)    }
+R_R1 MEAS CH {T}
+C_C2 0 RESET2 1.4427N
+C_C1 0 MEAS 1.4427N
+E_ABM2         RESET 0 VALUE { IF(V(CH)<0.5,1,0)    }
+.MODEL S1 VSWITCH  ROFF=1E+009  RON=1  VOFF=0.25  VON=0.75
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_DFFSBRB_RHPBASIC_GEN Q QB CLK D RB SB PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+X1 CLK CLKdel MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_DELAY_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH} DELAY = 15n
+X2 CLK CLKdel CLKint MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH}
+GQ 0 Qint VALUE = {IF(V(RB) < {VTHRESH},-5,IF(V(SB)< {VTHRESH},5, IF(V(CLKint)> {VTHRESH},  IF(V(D)> {VTHRESH},5,-5),0)))}
+CQint Qint 0 1n
+RQint Qint 0 1000MEG
+D_D10 Qint MY5 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V1 MY5 0 5
+D_D11 0 Qint MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+EQ Qqq 0 Qint 0 1
+X3 Qqq Qqqd1 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH} DELAY = 20n
+RQq Qqqd1 Q 1
+EQb Qbr 0 VALUE = {IF( V(Q) > {VTHRESH}, {VSS},{VDD})}
+RQb Qbr Qb 1
+Cdummy1 Q 0 1nF
+Cdummy2 QB 0 1nF
+.IC V(Qint) {VSS}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_DFFSBRB_SHPBASIC_GEN Q QB CLK D RB SB PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+X1 CLK CLKdel MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_DELAY_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH} DELAY = 15n
+X2 CLK CLKdel CLKint MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH}
+GQ 0 Qint VALUE = {IF(V(SB) < {VTHRESH},5,IF(V(RB)<{VTHRESH},-5, IF(V(CLKint)> {VTHRESH},  IF(V(D)> {VTHRESH},5,-5),0)))}
+CQint Qint 0 1n
+RQint Qint 0 1000MEG
+D_D10 Qint MY5 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V1 MY5 0 {VDD}
+D_D11 MYVSS Qint MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V2 MYVSS 0 {VSS}
+EQ Qqq 0 Qint 0 1
+X3 Qqq Qqqd1 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH} DELAY = 20n
+RQq Qqqd1 Q 1
+EQb Qbr 0 VALUE = {IF( V(Q) > {VTHRESH}, {VSS},{VDD})}
+RQb Qbr Qb 1
+Cdummy1 Q 0 1nF
+Cdummy2 QB 0 1nF
+.IC V(Qint) {VSS}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_DFFSR_RHPBASIC_GEN Q QB CLK D R S PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+X1 CLK CLKdel MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_DELAY_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH} DELAY = 15n
+X2 CLK CLKdel CLKint MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH}
+GQ 0 Qint VALUE = {IF(V(R) > {VTHRESH},-5,IF(V(S) > {VTHRESH},5, IF(V(CLKint)> {VTHRESH},  IF(V(D)> {VTHRESH},5,-5),0)))}
+CQint Qint 0 1n
+RQint Qint 0 1000MEG
+D_D10 Qint MY5 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V1 MY5 0 {VDD}
+D_D11 MYVSS Qint MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V2 MYVSS 0 {VSS}
+EQ Qqq 0 Qint 0 1
+X3 Qqq Qqqd1 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH} DELAY = 20n
+RQq Qqqd1 Q 1
+EQb Qbr 0 VALUE = {IF( V(Q) > {VTHRESH}, {VSS},{VDD})}
+RQb Qbr Qb 1
+Cdummy1 Q 0 1nF
+Cdummy2 QB 0 1nF
+.IC V(Qint) {VSS}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_DFFSR_SHPBASIC_GEN Q QB CLK D R S PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+X1 CLK CLKdel MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_DELAY_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH} DELAY = 15n
+X2 CLK CLKdel CLKint MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH}
+GQ 0 Qint VALUE = {IF(V(S) > {VTHRESH},5,IF(V(R) > {VTHRESH},-5, IF(V(CLKint)> {VTHRESH},  IF(V(D)> {VTHRESH},5,-5),0)))}
+CQint Qint 0 1n
+RQint Qint 0 1000MEG
+D_D10 Qint MY5 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V1 MY5 0 {VDD}
+D_D11 MYVSS Qint MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V2 MYVSS 0 {VSS}
+EQ Qqq 0 Qint 0 1
+X3 Qqq Qqqd1 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5 DELAY = 20n
+RQq Qqqd1 Q 1
+EQb Qbr 0 VALUE = {IF( V(Q) > {VTHRESH}, {VSS},{VDD})}
+RQb Qbr Qb 1
+Cdummy1 Q 0 1nF
+Cdummy2 QB 0 1nF
+.IC V(Qint) {VSS}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SBRBLATCHRHP_BASIC_GEN SB RB Q QB PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+GQ 0 Qint VALUE = {IF(V(RB) < {VTHRESH},-5,IF(V(SB) < {VTHRESH},5, 0))}
+CQint Qint 0 1n
+RQint Qint 0 1000MEG
+D_D10 Qint MY5 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V1 MY5 0 {VDD}
+D_D11 MYVSS Qint MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V2 MYVSS 0 {VSS}
+EQ Qqq 0 Qint 0 1
+X3 Qqq Qqqd1 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH}
+RQq Qqqd1 Q 1
+EQb Qbr 0 VALUE = {IF( V(Q) > {VTHRESH}, {VSS},{VDD})}
+RQb Qbr QB 1
+.IC V(Qint) {VSS}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SBRBLATCHSHP_BASIC_GEN SB RB Q QB PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+GQ 0 Qint VALUE = {IF(V(SB) < {VTHRESH},5,IF(V(RB) < {VTHRESH},-5, 0))}
+CQint Qint 0 1n
+RQint Qint 0 1000MEG
+D_D10 Qint MY5 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V1 MY5 0 {VDD}
+D_D11 MYVSS Qint MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V2 MYVSS 0 {VSS}
+EQ Qqq 0 Qint 0 1
+X3 Qqq Qqqd1 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH}
+RQq Qqqd1 Q 1
+EQb Qbr 0 VALUE = {IF( V(Q) > {VTHRESH}, {VSS},{VDD})}
+RQb Qbr QB 1
+.IC V(Qint) {VSS}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_GEN S R Q QB PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+GQ 0 Qint VALUE = {IF(V(R) > {VTHRESH},-5,IF(V(S)>{VTHRESH},5, 0))}
+CQint Qint 0 1n
+RQint Qint 0 1000MEG
+D_D10 Qint MY5 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V1 MY5 0 {VDD}
+D_D11 MYVSS Qint MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V2 MYVSS 0 {VSS}
+EQ Qqq 0 Qint 0 1
+X3 Qqq Qqqd1 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH}
+RQq Qqqd1 Q 1
+EQb Qbr 0 VALUE = {IF( V(Q) > {VTHRESH}, {VSS},{VDD})}
+RQb Qbr QB 1
+Cdummy1 Q 0 1n
+Cdummy2 QB 0 1n
+.IC V(Qint) {VSS}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHSHP_BASIC_GEN S R Q QB PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+GQ 0 Qint VALUE = {IF(V(S) > {VTHRESH},5,IF(V(R)>{VTHRESH},-5, 0))}
+CQint Qint 0 1n
+RQint Qint 0 1000MEG
+D_D10 Qint MY5 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V1 MY5 0 {VDD}
+D_D11 MYVSS Qint MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+V2 MYVSS 0 {VSS}
+EQ Qqq 0 Qint 0 1
+X3 Qqq Qqqd1 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={VTHRESH}
+RQq Qqqd1 Q 1
+EQb Qbr 0 VALUE = {IF( V(Q) > {VTHRESH}, {VSS},{VDD})}
+RQb Qbr QB 1
+Cdummy1 Q 0 1n
+Cdummy2 QB 0 1n
+.IC V(Qint) {VSS}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_NEW Q Qb R S PARAMS: ic=1 thresh=2.5 vdd=5 vss=0
+C_C1 Q 0 1n IC=0
+C_C2 0 QB 1n
+E_ABM5         N00055 0 VALUE { if(v(R) >{THRESH},{VSS},if(v(S)>{THRESH},{VDD},   V(Q)))    }
+R_R1 N00055 Q 1
+E_ABM6         N14322195 0 VALUE { IF(V(Q)<{THRESH},{VDD},{VSS})    }
+R_R2 N14322195 QB 1
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHSHP_BASIC_NEW Q Qb R S PARAMS: ic=1 thresh=2.5 vdd=5 vss=0
+C_C1 Q 0 1n IC=0
+C_C2 0 QB 1n
+E_ABM5         N00055 0 VALUE { if(v(S) >{THRESH},{VDD},if(v(R)>{THRESH},{VSS},   V(Q)))    }
+R_R1 N00055 Q 1
+E_ABM6         N14322195 0 VALUE { IF(V(Q)<{THRESH},{VDD},{VSS})    }
+R_R2 N14322195 QB 1
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHNOP_BASIC_NEW Q Qb R S PARAMS: ic=1 thresh=2.5 vdd=5 vss=0
+C_C1 Q 0 1n IC=0
+C_C2 0 QB 1n
+E_ABM5         N00055 0 VALUE { if(v(R) >{THRESH}& v(S)<{THRESH},{VSS},  if(v(S)>{THRESH} & v(R)<{THRESH},{VDD},V(Q)))    }
+R_R1 N00055 Q 1
+E_ABM6         N14322195 0 VALUE { IF(V(Q)<{THRESH},{VDD},{VSS})    }
+R_R2 N14322195 QB 1
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_COUNTER CLK COUNT_FE COUNT_RE GND RESET RST_INT PARAMS: min_pw=10n count_rst=128
+R_R4 N16838390 N16838391 {MIN_PW/2}
+R_R5 N16842332 CLKRE 1
+C_C5 GND CLKRE 1n
+R_R3 RST_INT N16832011 1
+E_ABM4         N16813271 0 VALUE { IF(V(RESET)>0.5 |   V(RST_INT)>0.5,0,IF(V(CLKRE)>0.55,V(COUNT_FE)+1,V(COUNT_RE)))    }
+R_R6 N168433471 CLKI 1
+E_ABM6         N16832011 0 VALUE { if(v(COUNT_RE) < 10m,0,if(v(COUNT_FE)>  {COUNT_RST}-0.1,1, V(RST_INT)))    }
+C_C1 GND COUNT_RE_INT 1n IC=0
+C_C6 GND CLKI 1n
+C_C3 GND RST_INT 1n IC=0
+E_ABM10         N168433471 0 VALUE { IF(V(CLK)<0.5,1,0)    }
+R_R1 COUNT_FE_INT N33733 1
+E_ABM8         N16840706 0 VALUE { IF(V(RST_INT)<0.5,1,0)    }
+C_C4 GND N16838391 1.443n
+E_E4         COUNT_RE GND COUNT_RE_INT GND 1
+R_R2 COUNT_RE_INT N16813271 1
+E_ABM2         N33733 0 VALUE { IF(V(RESET)>0.5 |   V(RST_INT)>0.5,0,IF(V(CLKI)>0.55,V(COUNT_RE_INT),V(COUNT_FE)))    }
+E_E3         COUNT_FE GND COUNT_FE_INT GND 1
+C_C2 GND COUNT_FE_INT 1n IC=0
+E_ABM7         N16838390 0 VALUE { IF(V(CLK)<0.5,1,0)    }
+E_ABM9         N16842332 0 VALUE { IF(V(N16838391)>0.5,0,IF(V(CLK)>0.5 &   V(N16840706)>0.5,1,0))    }
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_EA INM INP OUT VDD VSS PARAMS: headroom=0 bw=1meg Rout=100m co=1u   gain=10000 vslewp=1e6   
++ vslewn=1e6
+.PARAM  gm={gain/ro} pole={bw/gain} islewn= {-vslewn*co}  islewp={vslewp*co} ro={1/(2*3.1428*pole*co)}
+G_ABM2I1         N16717103 N16716809 VALUE { LIMIT(((V(INP)-V(INM))*{gm}),  {Islewn},{Islewp})    }
+R_R1 VSS N16716809 {Ro}
+C_C1 VSS N16716809 {Co}
+D_D3 N16716809 N16717103 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_DIDEAL
+D_D4 N167167951 N16716809 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_DIDEAL
+V_V1         N167167951 VSS {Headroom}
+V_V2         N16717103 VDD {Headroom}
+V_V4         N16724635 0 {Ro}
+E_E1         OUT_INT VSS N16716809 VSS 1
+R_Rout		 OUT_INT OUT {Rout}
+V_V3         N16724248 0 {gm}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_DIDEAL d  is=1e-015  tt=1e-011  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_OSCILLATOR CLK FREQ RAMP SDWN PARAMS: CLK_WIDTH=20N VOSC=1 COSC=10P
+V_Vref         VREF_OSC 0 {Vosc}
+C_Cramp RAMP 0 {Cosc}
+X_Sdisch DISCH 0 RAMP 0 MAIN_BLOCK_U1_WB_TPS61288RQQ_OSCILLATOR_SDISCH
+E_ABM1         TIME_PERIOD 0 VALUE { {1/{V(FREQ)}-(CLK_WIDTH+5n)}    }
+X_U2 CLK N16698680 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5   DELAY={CLK_WIDTH}
+X_U131 RAMP VREF_OSC CLK MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+D_D11 RAMP N16699162 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_DOSC
+V_V45         N16699162 0 {Vosc+4}
+G_ABMI3         N16699162 RAMP VALUE { {Cosc*Vosc/V(Time_Period)}    }
+X_U134 SDWN N16698680 DISCH MAIN_BLOCK_U1_WB_TPS61288RQQ_OR2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_DOSC d  is=1e-015  tt=1e-011  rs=0.01  n=0.1
+.IC    V(RAMP)=0
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_OSCILLATOR_SDISCH 1 2 3 4
+S_Sdisch 3 4 1 2 _Sdisch
+RS_Sdisch 1 2 1G
+.MODEL         _Sdisch VSWITCH Roff=100G Ron=100m Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_SOFTST_GEN DISABLE_SS EN_SS SS_INT  VDD VREF VSS PARAMS:  SS_TIME=1m  Iss=1u  VREF_VAL=1  SS=0 
++    Rdis=3k
+D_D62 SS_INT VDD MAIN_BLOCK_U1_WB_TPS61288RQQ_D_DSOFTSTART
+G_ABMII1         VDD SS_INT VALUE { IF(V(EN_SS) > 0.5,Iss,0)    }
+X_S1 DISABLE_SS VSS SS_INT VSS MAIN_BLOCK_U1_WB_TPS61288RQQ_SOFTST_GEN_S1  PARAMS: Rdis={Rdis}
+E_ABM9         VREF 0 VALUE { MIN(V(SS_INT) ,{VREF_VAL})    }
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_DSOFTSTART d  is=1e-015  tt=1e-011  rs=0.5  n=0.1
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_SOFTST_GEN_S1 1 2 3 4 PARAMS: Rdis=3k
+S_S1 3 4 1 2 _S1
+RS_S1 1 2 1G
+.MODEL         _S1 VSWITCH Roff=1e9 Ron={Rdis} Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_MIN_ON_TIMER IN OUT PARAMS: MIN_ON_TIME= 55 VDD=1 VSS=0
+C_C177 0 N00446 1.443n
+R_R276 N00406 N00446 {MIN_ON_TIME-10}
+X_U825 N00406 N00446 IN OUT MAIN_BLOCK_U1_WB_TPS61288RQQ_OR3_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS}   VTHRESH={{VDD+VSS}/2}
+X_U826 IN N00600 MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_DELAY_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS} VTHRESH={{VDD+VSS}/2}   DELAY= 10n
+D_D10 N00406 N00446 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_ONTIMER
+X_U827 N00600 IN N00406 MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD={VDD} VSS={VSS}   VTHRESH={{VDD+VSS}/2}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_ONTIMER d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT_TRANS DSCH OUT RAMP VIN PARAMS: TH=100n
+X_U3 RAMP IN_OUT DSCH MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+X_U18 N16776292 DSCH OUT N16776308 MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_GEN  PARAMS: VDD=1   VSS=0 VTHRESH=0.5
+X_S26 N16776302 0 RAMP 0 MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT_TRANS_S26
+G_G1         0 RAMP OUT 0 {100p/TH}
+X_U20 DSCH N16776302 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5 DELAY=15n
+X_U5 VIN N16776240 N16776292 MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+V_V3         N16776240 0 0.1
+V_V2         IN_OUT 0 1
+C_C2 RAMP 0 100p IC=0
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT_TRANS_S26 1 2 3 4
+S_S26 3 4 1 2 _S26
+RS_S26 1 2 1G
+.MODEL         _S26 VSWITCH Roff=10e9 Ron=10u Voff=0.4 Von=0.6
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_RISING_FALLING_EDGE_DELAY Falling_edge_delay Input_signal   Rising_edge_delay PARAMS:   
++ Rising_Edge_Delay=0 Falling_Edge_Delay=0
+X_U20 INPUT_SIGNAL N00998 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1_REFE
+R_R2 INPUT_SIGNAL N00998 1.443
+X_U16 N00150 Rising_edge_delay MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+C_C2 0 N00998 {Falling_Edge_Delay}
+X_U17 N00998 Falling_edge_delay MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+X_U19 N00150 INPUT_SIGNAL MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1_REFE
+R_R1 INPUT_SIGNAL N00150 1.443
+C_C1 0 N00150 {Rising_Edge_Delay}
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1_REFE 1 2
+d1 1 2 MAIN_BLOCK_U1_WB_TPS61288RQQ_DD1
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_DD1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.01
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_ASYMMETRIC_DELAY inp out params: rising_edge_delay=1 vthresh=0.5   falling_edge_delay=1 vdd=1  
++  vss=0
+e_abm3         inp1 0 value { if(v(inp) > {vthresh}, {vdd} , {vss})    }
+e_abm1         yin4 0 value { if(v(yin3) > {vthresh}, {vdd} , {vss})    }
+e_abm2         yin2 0 value { if(v(yin1) > {vthresh}, {vdd} , {vss})    }
+r_rint inp1 yin1 1
+c_cint yin1 0 {1.443*rising_edge_delay}
+d_d10 yin1 inp1 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+r_r1 yin4 out 1
+r_rout yin2 yin3 1
+c_cout yin3 0 {1.443*falling_edge_delay}
+c_c1 0 out 1n
+d_d11 yin2 yin3 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.005  n=0.1
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_HICCUP_BLOCK CLOCK OC_EVENT SYS_OFF SYS_RESTART VSS PARAMS: WAIT_TIME=1 CYCLES=10
+V_V4         N01339 VSS {WAIT_TIME}
+D_D62 N01375 N01339 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_HICCUP
+X_U8 N16780221 CLOCK_INT CYC_SKIP MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+X_U10 CLOCK CLOCK_INT MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT  PARAMS:  T=20
+X_U12 OC_EVENT N16779977 N16779896 VSS N16778063 N16778282 MAIN_BLOCK_U1_WB_TPS61288RQQ_COUNTER  PARAMS: MIN_PW=10N   
++ COUNT_RST={CYCLES}
+G_G2         N01339 N01375 SYS_OFF VSS 0.998m
+X_U5 N01375 N01457 N02319 MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+X_U14 N16778282 RESET_HICCUP SYS_OFF N16778285 MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+X_S2 RESET_HICCUP VSS N01375 VSS MAIN_BLOCK_U1_WB_TPS61288RQQ_COUNTER_TRY_S2
+X_U13 SYS_OFF CYC_SKIP N16778063 MAIN_BLOCK_U1_WB_TPS61288RQQ_OR2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+X_U7 CLOCK_INT OC_EVENT CYC_SKIP_INT N16779469 MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+V_V2         N01457 VSS {WAIT_TIME}
+X_U6 SYS_RESTART RESET_HICCUP MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5 DELAY=30n
+X_U4 N02319 RESET_HICCUP SYS_RESTART N02908 MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+X_U9 CYC_SKIP_INT N16780221 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5 DELAY=25n
+C_C2 N01375 VSS 1u TC=0,0
+.MODEL MAIN_BLOCK_U1_WB_TPS61288RQQ_D_HICCUP D( IS=1e-15 TT=10p Rs=0.005 N=.001 )
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_COUNTER_TRY_S2 1 2 3 4
+S_S2 3 4 1 2 _S2
+RS_S2 1 2 1G
+.MODEL         _S2 VSWITCH Roff=1e9 Ron=1m Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_PGOOD_1 FB GND PGOOD PARAMS: vrefth_low=0.93 vrefth_high=1.07 VREFTH_LOW_HYS=20m   
++ VREFTH_HIGH_HYS=20m
+X_S1 PG10 0 PGOOD 0 MAIN_BLOCK_U1_WB_TPS61288RQQ_PGOOD_1_S1
+X_U614 FB N01588 N01542 PGOOD_OV MAIN_BLOCK_U1_WB_TPS61288RQQ_COMPHYS_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+V_V5         N01750 0 {VREFTH_LOW}
+V_V4         N01542 0 {VREFTH_HIGH_HYS}
+V_V8         N01702 0 {VREFTH_LOW_HYS}
+X_U618 PGOOD_OV PGOOD_UV PG10 MAIN_BLOCK_U1_WB_TPS61288RQQ_OR2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+V_V3         N01588 0 {VREFTH_HIGH}
+X_U613 N01750 FB N01702 PGOOD_UV MAIN_BLOCK_U1_WB_TPS61288RQQ_COMPHYS_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_PGOOD_1_S7 1 2 3 4
+S_S7 3 4 1 2 _S7
+RS_S7 1 2 1G
+.MODEL         _S7 VSWITCH Roff=1 Ron=1e6 Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_PGOOD_1_S5 1 2 3 4
+S_S5 3 4 1 2 _S5
+RS_S5 1 2 1G
+.MODEL         _S5 VSWITCH Roff=1e6 Ron=1m Voff=0.25 Von=0.5
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_PGOOD_1_S6 1 2 3 4
+S_S6 3 4 1 2 _S6
+RS_S6 1 2 1G
+.MODEL         _S6 VSWITCH Roff=1e6 Ron=1m Voff=0.25 Von=0.5
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_PGOOD_1_S1 1 2 3 4
+S_S1 3 4 1 2 _S1
+RS_S1 1 2 1G
+.MODEL         _S1 VSWITCH Roff=1e9 Ron=1 Voff=0.2 Von=0.8
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_CESR IN OUT  PARAMS:  C=100u ESR=0.01 X=1 IC=0
+C	IN 1 {C*X} IC=0
+RESR	1 OUT {ESR/X}
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_LDCR IN OUT  PARAMS:  L=1u DCR=0.01 IC=0
+L	IN 1  {L} IC=0
+RDCR	1 OUT {DCR}
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_ERROR_AMPLIFIER INM INP OUT VDD VSS PARAMS: isource=5m headroom=0 bw=1meg isink=5m   co=1n   
++ rout=100m vslewn=1e6 gain=100000 vslewp=1e6 IC=0
+.PARAM ro={1/(2*3.1428*pole*co)} gm={gain/ro} pole={bw/gain} islewn={-vslewn*co}  islewp={vslewp*co}
+G_ABM2I1         VDD N16716809 VALUE { LIMIT(((V(INP)-V(INM))*{gm}),{Islewn},  {Islewp})    }
+D_D5 N16742688 N16742726 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_EA
+R_R1 VSS N16716809 {Ro}
+C_C1 N16716809 VSS {Co} IC=0
+D_D3 N16716809 N167167730 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_EA
+R_R4 N16742680 OUT {Rout}
+D_D4 N167167951 N16716809 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_EA
+V_V1         N167167951 VSS {{Headroom}-90m}
+V_V2         N167167730 VDD {{Headroom}-70m}
+I_I2         N16742680 N16742688 DC {Isink}
+D_D6 N16742688 N16742680 MAIN_BLOCK_U1_WB_TPS61288RQQ_D_EA
+E_E1         N16742726 VSS N16716809 VSS 1
+I_I1         N16742726 N16742688 DC {Isource}
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_EA d  is=1e-015  tt=1e-011  n=0.1
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_VCCS_LIMIT IN1 IN2 OUTP OUTN PARAMS: IMIN=0 IMAX=1m GAIN=30u
+G_U1_ABM2I4     OUTP OUTN VALUE { {LIMIT((V(IN1) - V(IN2))*{GAIN}, {IMIN},  {IMAX})}    }
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_VCVS_LIMIT IN1 IN2 OUTP OUTN PARAMS: VMIN=0 VMAX=1m GAIN=30u
+E_U1_ABM2I4     OUTP OUTN VALUE { {LIMIT((V(IN1) - V(IN2))*{GAIN}, {VMIN},  {VMAX})}    }
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_MOSFET_DRIVER GATE GND PWM VCC PARAMS: voff_bottom_switch=0.2  ron_top_switch=1m   
++ von_top_switch=0.8  roff_bottom_switch=100meg dead_time_drvl_to_drvh=5n  dead_time_drvh_to_drvl=5n  von_bottom_switch=0.8   
++ voff_top_switch=0.2 roff_top_switch=100meg  ron_bottom_switch=1m
+E_E2         N19956 GND PWM_B_DEL GND 1
+V_V4         N19778 GND 0.5
+X_S34 DRVL GND GATE GND MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_GEN_S34
+E_E1         N19816 GND PWM GND 1
+X_S35 DRVH GND VCC GATE MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_GEN_S35
+D_D1 GND GATE MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+X_U238 PWMBAR N19910 DRVL MAIN_BLOCK_U1_WB_TPS61288RQQ_AND2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+D_D2 GATE VCC MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1
+X_U11 PWM PWMBAR MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=500E-3
+R_R2 N19956 N19910 1
+R_R1 N19816 N19744 1
+X_U12 DRVH PWM_B_DEL MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=500E-3
+C_C1 GND N19744 {1.414*{DEAD_TIME_DRVH_TO_DRVL+1n}}
+C_C2 GND N19910 {(1.414*{DEAD_TIME_DRVL_TO_DRVH}-1n)}
+X_U234 N19744 N19778 DRVH MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+.model MAIN_BLOCK_U1_WB_TPS61288RQQ_D_D1 d  is=1e-015  tt=1e-011  rs=0.05  n=0.1
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_GEN_S34 1 2 3 4
+S_S34 3 4 1 2 _S34
+RS_S34 1 2 1G
+.MODEL         _S34 VSWITCH Roff={ROFF_BOTTOM_SWITCH} Ron={RON_BOTTOM_SWITCH}   Voff={VOFF_BOTTOM_SWITCH} Von={VON_BOTTOM_SWITCH}
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_DRIVER_GEN_S35 1 2 3 4
+S_S35 3 4 1 2 _S35
+RS_S35 1 2 1G
+.MODEL         _S35 VSWITCH Roff={ROFF_TOP_SWITCH} Ron={RON_TOP_SWITCH} Voff=  {VOFF_TOP_SWITCH} Von={VON_TOP_SWITCH}
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT_GENERIC DSCH OUT VIN PARAMS: TH=100n
+X_S27 N16788950 0 RAMP_1 0 MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT_GENERIC_S27
+X_S26 N16777627 0 RAMP 0 MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT_GENERIC_S26
+G_G2         0 RAMP_1 N16789052 0 {10u}
+X_U22 DSCH OUT2 RESET_PRE MAIN_BLOCK_U1_WB_TPS61288RQQ_OR2_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=500E-3
+G_G1         0 RAMP OUT 0 {100p/TH}
+X_U21 N16794468 N16788950 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5 DELAY=5n
+X_U20 DSCH N16777627 MAIN_BLOCK_U1_WB_TPS61288RQQ_BUF_DELAY_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5 DELAY=5n
+V_V6         IN_OUT_1 0 {(10u*TH)/100p}
+V_V2         IN_OUT 0 1
+X_U5 VIN N16777582 SET MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+X_U7 VIN N16788897 N16789052 MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+X_U6 DSCH N16777819 DSCH_F MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+V_V5         N16788897 0 0.05
+V_V3         N16777582 0 0.05
+V_V4         N16777819 0 0.05
+X_U18 SET RESET_PRE OUT N16777630 MAIN_BLOCK_U1_WB_TPS61288RQQ_SRLATCHRHP_BASIC_GEN  PARAMS: VDD=1   VSS=0 VTHRESH=0.5
+X_U23 VIN N16794468 MAIN_BLOCK_U1_WB_TPS61288RQQ_INV_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=500E-3
+X_U4 RAMP_1 IN_OUT_1 OUT2 MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0   VTHRESH=0.5
+C_C3 RAMP_1 0 100p IC=0
+C_C2 RAMP 0 100p IC=0
+X_U3 RAMP IN_OUT DSCH MAIN_BLOCK_U1_WB_TPS61288RQQ_COMP_BASIC_GEN  PARAMS: VDD=1 VSS=0 VTHRESH=0.5
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT_GENERIC_S27 1 2 3 4
+S_S27 3 4 1 2 _S27
+RS_S27 1 2 1G
+.MODEL         _S27 VSWITCH Roff=10e9 Ron=10u Voff=0.4 Von=0.6
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.subckt MAIN_BLOCK_U1_WB_TPS61288RQQ_ONE_SHOT_GENERIC_S26 1 2 3 4
+S_S26 3 4 1 2 _S26
+RS_S26 1 2 1G
+.MODEL         _S26 VSWITCH Roff=10e9 Ron=10u Voff=0.4 Von=0.6
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_D_DNEW 1 2
+D1 1 2 MAIN_BLOCK_U1_WB_TPS61288RQQ_DD7
+.MODEL MAIN_BLOCK_U1_WB_TPS61288RQQ_DD7 D( IS=1e-15 TT=10p Rs=0.005 N=.01 )
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_VC_RES1_10K 1 2 4 5
+ERES	1	3	VALUE = { IF(V(4,5)>0,I(VSENSE)*34K/V(4,5),0) }
+VSENSE	3	2	DC	0V
+.ENDS
+***********************************
+*     Created by WB Importer      *
+***********************************
+.SUBCKT MAIN_BLOCK_U1_WB_TPS61288RQQ_VC_RES1_68K 1 2 4 5
+ERES	1	3	VALUE = { IF(V(4,5)>0,I(VSENSE)*68k/V(4,5),0) }
+VSENSE	3	2	DC	0V
+.ENDS
