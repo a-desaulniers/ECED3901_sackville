@@ -157,8 +157,8 @@ def generate_launch_description():
 
   save_map_on_exit = RegisterEventHandler(
     event_handler=OnProcessExit(
-        target_action=start_square_routine, # This is your C++ node from earlier
-        on_exit=[save_map_cmd],
+        target_action=start_square_routine,
+        on_exit=[save_map_cmd]
     )
   )
 
