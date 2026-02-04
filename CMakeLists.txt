@@ -14,6 +14,7 @@ find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 
 
@@ -25,7 +26,7 @@ add_executable(dt1 src/eced3901_dt1.cpp)
 ament_target_dependencies(dt1 rclcpp std_msgs nav_msgs geometry_msgs tf2)
 
 add_executable(RTest src/Robot_Test.cpp)
-ament_target_dependencies(RTest rclcpp std_msgs nav_msgs geometry_msgs tf2)
+ament_target_dependencies(RTest rclcpp std_msgs nav_msgs geometry_msgs sensor_msgs tf2)
 
 
 

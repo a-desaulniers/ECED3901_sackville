@@ -23,6 +23,7 @@ License: GNU GPLv3
 #include "geometry_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "nav_msgs/msg/odometry.hpp"
+#include "sensor_msgs/msg/imu.hpp"
 
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
@@ -42,7 +43,7 @@ class SquareRoutine : public rclcpp::Node {
 		// Create the subscription
 		// The callback function executes whenever data is published to the 'topic' topic.
 		subscription_ = this->create_subscription<nav_msgs::msg::Odometry>("odom", 10, std::bind(&SquareRoutine::topic_callback, this, _1));
-          
+        imu_sub = this->create_subscription<sensor_msgs::msg::Imu>("imu/data", 10, std::bind(&SquareRoutine::imu_callback, this, _1));
 		// Create the publisher
 		// Publisher to a topic named "topic". The size of the queue is 10 messages.
 		publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel",10);
@@ -54,6 +55,8 @@ class SquareRoutine : public rclcpp::Node {
   private:
  	 // Declaration of subscription_ attribute
 	rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr subscription_;
+
+	rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub;
          
 	// Declaration of publisher_ attribute      
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
@@ -71,6 +74,8 @@ class SquareRoutine : public rclcpp::Node {
 	int ticks = 0; // ticks to wait
 	const int wait_ticks=100; // 25 = 500ms
 	bool just_moved = 0;
+
+	double imu_yaw_now = 0;
 	
 	// States enum
 	enum State {
@@ -98,6 +103,22 @@ class SquareRoutine : public rclcpp::Node {
 		
 		//DEBUG PRINT SYNTAX 
 		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
+	}
+
+	void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg) {
+		
+		tf2::Quaternion q(
+			msg->orientation.x,
+			msg->orientation.y,
+			msg->orientation.z,
+			msg->orientation.w
+		);
+		tf2::Matrix3x3 m(q);
+		double dummy;
+		m.getRPY(dummy, dummy, imu_yaw_now);
+		
+		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
+		RCLCPP_INFO(this->get_logger(), "IMU Yaw: %f", imu_yaw_now);
 	}
 	
 	void timer_callback() {
