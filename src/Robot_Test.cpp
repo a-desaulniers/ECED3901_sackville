@@ -39,6 +39,8 @@ using namespace std;
 class SquareRoutine : public rclcpp::Node {
   public:
   	static inline double test_vel = 0;
+  	static inline int test_in = 0;
+  	static inline int test_time = 0;
 	// Constructor creates a node named Square_Routine. 
 	SquareRoutine() : Node("Square_Routine") {
 		// Create the subscription
@@ -54,6 +56,8 @@ class SquareRoutine : public rclcpp::Node {
 	
 		// Open fout
 		fout.open(path);
+		if (test_in) fout << "Angular velocity x,Angular velocity y,Angular velocity z,Time (s);";
+		else fout << "Yaw,Time (s);";
 
 	}
 
@@ -84,7 +88,7 @@ class SquareRoutine : public rclcpp::Node {
 	const int wait_ticks=100; // 25 = 500ms
 	bool just_moved = 0;
 
-	double imu_yaw_now = 0;
+	double imu_yaw_now = 0, imu_ang_vel_x = 0, imu_ang_vel_y = 0, imu_ang_vel_z = 0;
 	
 	// States enum
 	enum State {
@@ -129,18 +133,25 @@ class SquareRoutine : public rclcpp::Node {
 		tf2::Matrix3x3 m(q);
 		double dummy;
 		m.getRPY(dummy, dummy, imu_yaw_now);
+		imu_ang_vel_x = msg->angular_velocity.x;
+		imu_ang_vel_y = msg->angular_velocity.y;
+		imu_ang_vel_z = msg->angular_velocity.z;
 		
 		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
-		RCLCPP_INFO(this->get_logger(), "IMU Yaw: %f", imu_yaw_now);
+		
+		RCLCPP_INFO(this->get_logger(), "IMU Yaw: %f; Ang vel x: %f, y: %f, z: %f", imu_yaw_now, imu_ang_vel_x, imu_ang_vel_y, imu_ang_vel_z);
 	}
 	
 	void timer_callback() {
-		if (ticks%50 == 0)
-			fout << imu_yaw_now << "," << ticks/50 << ";";
-		
+		if (ticks%50 == 0) {
+			if (test_in)
+				fout << imu_ang_vel_x << "," << imu_ang_vel_y << "," << imu_ang_vel_z << "," << ticks/50 << ";";
+			else
+				fout << imu_yaw_now << "," << ticks/50 << ";";				
+		}
 		ticks++;
 
-		if (ticks > 500) { // Close after 10s
+		if (ticks > 50 * test_time) { // Close after 10s
 			if (fout.is_open()) fout.close();
 			RCLCPP_INFO(this->get_logger(), "Done! IMU data saved in %s", path.c_str());
 			rclcpp::shutdown();
@@ -188,7 +199,11 @@ int main(int argc, char * argv[]) {
 	// Get velocity
 	//cout << "Velocity: ";
 	//cin >> SquareRoutine::test_vel;
-	
+	cout << "Vel (1) or yaw (0): ";
+	cin >> SquareRoutine::test_in;	
+	cout << "seconds to run for: ";
+	cin >> SquareRoutine::test_time;
+		
 	// Initialize ROS2
 	rclcpp::init(argc, argv);
   
