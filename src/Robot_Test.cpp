@@ -46,7 +46,9 @@ class SquareRoutine : public rclcpp::Node {
 		// Create the subscription
 		// The callback function executes whenever data is published to the 'topic' topic.
 		subscription_ = this->create_subscription<nav_msgs::msg::Odometry>("odom", 10, std::bind(&SquareRoutine::topic_callback, this, _1));
-        imu_sub = this->create_subscription<sensor_msgs::msg::Imu>("imu/data", 10, std::bind(&SquareRoutine::imu_callback, this, _1));
+        	/*if (test_in)*/ imu_sub = this->create_subscription<sensor_msgs::msg::Imu>("imu/imu", 10, std::bind(&SquareRoutine::imu_callback, this, _1));
+        	//else imu_sub = this->create_subscription<sensor_msgs::msg::Imu>("imu/imu", 10, std::bind(&SquareRoutine::imu_callback, this, _1));
+		
 		// Create the publisher
 		// Publisher to a topic named "topic". The size of the queue is 10 messages.
 		publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel",10);
@@ -143,11 +145,11 @@ class SquareRoutine : public rclcpp::Node {
 	}
 	
 	void timer_callback() {
-		if (ticks%50 == 0) {
+		if (ticks%5 == 0) { // Poll every 100ms
 			if (test_in)
-				fout << imu_ang_vel_x << "," << imu_ang_vel_y << "," << imu_ang_vel_z << "," << ticks/50 << ";";
+				fout << imu_ang_vel_x << "," << imu_ang_vel_y << "," << imu_ang_vel_z << "," << ((float) (ticks/5))/10.0f << ";";
 			else
-				fout << imu_yaw_now << "," << ticks/50 << ";";				
+				fout << imu_yaw_now << "," << ((float) (ticks/5))/10.0f << ";";				
 		}
 		ticks++;
 
