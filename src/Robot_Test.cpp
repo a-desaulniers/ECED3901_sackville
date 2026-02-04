@@ -14,6 +14,7 @@ License: GNU GPLv3
 #include <string>		// String functions
 #include <cmath>
 #include <iostream>
+#include <fstream>
 
 // ROS Client Library for C++
 #include "rclcpp/rclcpp.hpp"
@@ -50,6 +51,14 @@ class SquareRoutine : public rclcpp::Node {
       
 	  	// Create the timer
 	  	timer_ = this->create_wall_timer(20ms, std::bind(&SquareRoutine::timer_callback, this)); 	 // Changed to 50Hz 
+	
+		// Open fout
+		fout.open(path);
+
+	}
+
+	~SquareRoutine() {
+    	if (fout.is_open()) fout.close();
 	}
 
   private:
@@ -87,6 +96,10 @@ class SquareRoutine : public rclcpp::Node {
 	};
 	enum State state = INIT;
 
+	// Output file
+	std::ofstream fout;
+	string path = "src/eced3901/test_logs/IMU_data.csv";
+
 	// Functions
 	void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
 		x_now = msg->pose.pose.position.x;
@@ -122,69 +135,17 @@ class SquareRoutine : public rclcpp::Node {
 	}
 	
 	void timer_callback() {
-		geometry_msgs::msg::Twist msg;
+		if (ticks%50 == 0)
+			fout << imu_yaw_now << "," << ticks/50 << ";";
 		
-		// State machine
-		switch (state) {
-			case INIT: {
-				//turn_rads(M_PI/2);
-				move_distance(0.3);
-				state = MOVE;
-				break;
-			}
-			case MOVE: {
-				// Calculate distance travelled from initial
-				d_now =	pow( pow(x_now - x_init, 2) + pow(y_now - y_init, 2), 0.5 );
-				double d_err = d_aim - d_now;
-				if (d_err < lin_tol) { // Check if within tolerance
-					msg.linear.x = 0;
-					msg.angular.z = 0;
-					//ticks = wait_ticks;
-					state = STOP;
-					//just_moved = 1;
-				} else {
-					//double vel = x_vel*d_err;
-					//if (vel < x_vel_min)
-					msg.linear.x = test_vel; 
-					msg.angular.z = 0;
-				}
-				//RCLCPP_INFO(this->get_logger(), "Moving. Ang: %f", yaw_now);
-				break;
-			}
-			case TURN: {
-				// Calculate rotation
-				double rot_now = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init)); // arctan(tan(x)) normalizes the angle into the range (-pi, pi)
-				double ang_err = atan2(sin(yaw_aim - rot_now), cos(yaw_aim - rot_now)); // CANT HANDLE CW TURNS
-				//RCLCPP_INFO(this->get_logger(), "Turning. Ang: %f, Ang err: %f", yaw_now, ang_err);
-				if (ang_err < ang_tol) { // Close enough
-					msg.angular.z = 0;
-					ticks = wait_ticks;
-					state = WAIT;
-					//just_moved = 0;
-					
-				} else {
-					double vel = test_vel; //(ang_err > ang_vel_min)?(ang_err*ang_vel):(ang_vel_min*ang_vel);
-					msg.angular.z = vel;
-				}
-				break;
-			}
-			case WAIT: {
-				msg.linear.x = 0;
-				msg.angular.z = 0;
-				//RCLCPP_INFO(this->get_logger(), "waiting. Ticks: %d", ticks );
-				//if ((ticks--) <= 0) { // Still waiting?
-					//state = MOVE; //just_moved?TURN:MOVE;
-					//sequence_statemachine();	
-				}
-				break;
-			case STOP: {
-				msg.linear.x = 0;
-				msg.angular.z = 0;
-			}
+		ticks++;
+
+		if (ticks > 500) { // Close after 10s
+			if (fout.is_open()) fout.close();
+			RCLCPP_INFO(this->get_logger(), "Done! IMU data saved in %s", path.c_str());
+			rclcpp::shutdown();
 		}
-		//RCLCPP_INFO(this->get_logger(), "linear: %f, %f, %f, angular: %f, %f, %f", msg.linear.x, msg.linear.y, msg.linear.z, msg.angular.x, msg.angular.y, msg.angular.z);
-		// Publish msg
-		publisher_->publish(msg);
+
 	}
 	
 	void sequence_statemachine() {
@@ -225,8 +186,8 @@ class SquareRoutine : public rclcpp::Node {
 int main(int argc, char * argv[]) {
 
 	// Get velocity
-	cout << "Velocity: ";
-	cin >> SquareRoutine::test_vel;
+	//cout << "Velocity: ";
+	//cin >> SquareRoutine::test_vel;
 	
 	// Initialize ROS2
 	rclcpp::init(argc, argv);
