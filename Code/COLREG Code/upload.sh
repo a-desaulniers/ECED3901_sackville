@@ -1,4 +1,18 @@
-#!/bin/bash
+# Written by Alexandre DesAulniers, updated for ECED3901. AVRDUDE uploader program. 
+#
+# ------------------
+
+# To initialize UART pipe in bash, run
+#
+#`stty -F /dev/ttyUSB0 115200 raw -echo && cat /dev/ttyUSB0`
+#
+# ------------------
+#
+# upload.sh requires `avr-gcc avr-binutils avr-libc avrdude` and a C file.
+# 
+# Use syntax for upload.sh is:
+# `./upload.sh file_name.c `
+
 
 # Configuration
 MCU="atmega328p"
@@ -15,7 +29,7 @@ fi
 FILENAME=$(basename "$1" .c)
 
 echo "--- Compiling $1 ---"
-# 1. Compile to object file
+# Compile to object file
 avr-gcc -Wall -Os -DF_CPU=$F_CPU -mmcu=$MCU -o "$FILENAME.elf" "$1"
 
 if [ $? -ne 0 ]; then
@@ -23,11 +37,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 2. Convert ELF to HEX
+# Convert .elf to .hex
 avr-objcopy -O ihex "$FILENAME.elf" "$FILENAME.hex"
 
 echo "--- Uploading $FILENAME.hex to ATmega328P ---"
-# 3. Use your existing avrdude command
+
+# Push via avrdude
 avrdude -c arduino -p m328p -P $PORT -b $BAUD -U flash:w:"$FILENAME.hex":i
 
 if [ $? -eq 0 ]; then
