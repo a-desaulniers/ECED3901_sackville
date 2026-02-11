@@ -65,10 +65,10 @@ class SquareRoutine : public rclcpp::Node {
 	double rol_now=0, pit_now=0, yaw_now=0, yaw_init=0, yaw_aim=0;
 	const double lin_vel_min = 0.1; // minimum linear velocity
 	const double ang_vel_min = 0.2; // minimum angular velocity
-	const double lin_tol=0.01, ang_tol=0.02; // Linear and angular tolerances (1cm and ~1 degree)
+	const double lin_tol=0.01, ang_tol=0.04; // Linear and angular tolerances (1cm and ~2 degree)
 	int ticks = 0; // ticks to wait
 	int move_count = 0; // Number of movements, used to determine stop state
-	const int wait_ticks=25; // 25 = 500ms, 50 = 1s
+	const int wait_ticks=100; // 25 = 500ms, 50 = 1s
 	bool just_moved = 0;
 	
 	// States enum
