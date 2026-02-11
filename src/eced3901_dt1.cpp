@@ -59,18 +59,20 @@ class SquareRoutine : public rclcpp::Node {
 	rclcpp::TimerBase::SharedPtr timer_;
 	
 	// Declaration of Class Variables
-	double lin_vel_g = 0.3, ang_vel_g = 0.3; // Velocity gains
 	double x_now = 0, x_init = 0, y_now = 0, y_init = 0;
 	double d_aim = 0;
 	double rol_now=0, pit_now=0, yaw_now=0, yaw_init=0, yaw_aim=0;
-	const double lin_vel_min = 0.1, lin_acc_max = 0.01; // minimum linear velocity, max acceleration per tick.
-	double lin_vel_now = 0;
-	const double ang_vel_min = 0.2; // minimum angular velocity
-	const double lin_tol=0.01, ang_tol=0.02; // Linear and angular tolerances (1cm and ~1 degree)
-	int ticks = 0; // ticks to wait
+	double lin_vel_now = 0, ang_vel_now = 0;
 	int move_count = 0; // Number of movements, used to determine stop state
-	const int wait_ticks=25; // 25 = 500ms, 50 = 1s
+	int ticks = 0; // ticks to wait
 	bool just_moved = 0;
+
+	// Tweakables
+	const double lin_vel_g = 0.3, ang_vel_g = 0.3; // Velocity gains
+	const double lin_vel_min = 0.1, lin_acc_max = 0.002; // minimum linear velocity, max acceleration per tick (0.01 = 0.5 m/s/s).
+	const double ang_vel_min = 0.05, ang_acc_max = 0.005; // minimum angular velocity (WAS 0.2, 0.05 might be too slow for hardware, but DRASTICALLY IMPROVED ACCURACY), max accel (0.005 = 0.25 rad/s/s)
+	const double lin_tol=0.01, ang_tol=0.02; // Linear and angular tolerances (1cm and ~1 degree)
+	const int wait_ticks=25; // 25 = 500ms, 50 = 1s
 	
 	// States enum
 	enum State {
@@ -98,6 +100,7 @@ class SquareRoutine : public rclcpp::Node {
 		
 		//DEBUG PRINT SYNTAX 
 		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
+		RCLCPP_INFO(this->get_logger(), "yaw: %f", yaw_now); // Print Yaw
 	}
 	
 	void timer_callback() {
@@ -121,6 +124,8 @@ class SquareRoutine : public rclcpp::Node {
 				// Calculate distance travelled from initial
 				double d_now =	pow( pow(x_now - x_init, 2) + pow(y_now - y_init, 2), 0.5 );
 				double d_err = d_aim - d_now;
+				// Calculate veering
+				double ang_err = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init));
 				if (d_err < lin_tol) { // Check if within tolerance
 					msg.linear.x = 0;
 					msg.angular.z = 0;
@@ -139,12 +144,14 @@ class SquareRoutine : public rclcpp::Node {
 					// Easing
 					if (target_vel < lin_vel_min) vel = lin_vel_min;
 					else if (target_vel > vel) vel += lin_acc_max;
-					else if (target_vel < vel) vel -= lin_acc_max;
 					else vel = target_vel;
 
-					RCLCPP_INFO(this->get_logger(), "Linear Velocity: %f", vel);
+					//RCLCPP_INFO(this->get_logger(), "Linear Velocity: %f", vel);
 					msg.linear.x = vel; 
-					msg.angular.z = 0;
+					// Compute veering correction
+					double veer = 0;
+					if (abs(ang_err) > ang_tol) veer = -(ang_err>0?1:-1) * ang_vel_min; // Gently correct veering
+					msg.angular.z = veer;
 					lin_vel_now = vel;
 				}
 				//RCLCPP_INFO(this->get_logger(), "Moving. Ang: %f", yaw_now);
@@ -155,19 +162,27 @@ class SquareRoutine : public rclcpp::Node {
 				double rot_now = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init)); // arctan(tan(x)) normalizes the angle into the range (-pi, pi)
 				double ang_err = atan2(sin(yaw_aim - rot_now), cos(yaw_aim - rot_now)); // CANT HANDLE CW TURNS
 				//RCLCPP_INFO(this->get_logger(), "Turning. Ang: %f, Ang err: %f", yaw_now, ang_err);
-				if (ang_err < ang_tol) { // Close enough
+				if (abs(ang_err) < ang_tol) { // Close enough
 					msg.angular.z = 0;
 					ticks = wait_ticks;
 					state = WAIT;
+					ang_vel_now = 0;
 					just_moved = 0;
 					
 				} else {
 					// Compute angular velocity
-					// TODO: Eliminate directional bias, implement overshoot correction?
-					double vel = ang_err * ang_vel_g;
-					if (vel < ang_vel_min) vel = ang_vel_min;
-					RCLCPP_INFO(this->get_logger(), "Angular Velocity: %f", vel);
+					double target_vel = ang_err * ang_vel_g;
+					double vel_sign = ang_err>0?1:-1;
+					double vel = ang_vel_now;
+					// Easing
+					if (abs(target_vel) < ang_vel_min) vel = vel_sign * ang_vel_min;
+					else if (abs(target_vel) > abs(ang_vel_now)) vel += vel_sign * ang_acc_max;
+					else vel = target_vel;
+
+
+					//RCLCPP_INFO(this->get_logger(), "Angular Velocity: %f", vel);
 					msg.angular.z = vel;
+					ang_vel_now = vel;
 				}
 				break;
 			}
@@ -193,13 +208,13 @@ class SquareRoutine : public rclcpp::Node {
 		publisher_->publish(msg);
 	}
 	
-	void sequence_statemachine() {
+	void sequence_statemachine() { // Lol I mostly sequence the state machine in the timer callback
 			switch(state) {
 			  case MOVE:
 			    move_distance(1.0);
 			    break;
 			  case TURN:
-			    turn_rads(M_PI/2);
+			    turn_rads(M_PI/2); // Make negative to test CW turns
 			    break;
 			  default:
 			    break;
@@ -210,7 +225,8 @@ class SquareRoutine : public rclcpp::Node {
 	void move_distance(double distance) {
 		d_aim = distance;
 		x_init = x_now;
-		y_init = y_now;		
+		y_init = y_now;
+		yaw_init = yaw_now;	
 		//state = MOVE;	
 	}
 	

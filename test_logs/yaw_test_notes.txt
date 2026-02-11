@@ -1,0 +1,2 @@
+1: speed: 0.47; rotations: 1; End angle: ~358 degrees
+2: speed: 0.76; rotations: 2; End angle: ~353 degrees

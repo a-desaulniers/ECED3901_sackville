@@ -12,6 +12,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch.actions import TimerAction
 
 def generate_launch_description():
 
@@ -35,6 +36,14 @@ def generate_launch_description():
   use_sim_time = LaunchConfiguration('use_sim_time')
   use_simulator = LaunchConfiguration('use_simulator')
   world = LaunchConfiguration('world')
+
+  # Optionally run DT1
+  dt1 = LaunchConfiguration('dt1')
+
+  declare_dt1 = DeclareLaunchArgument(
+    name='dt1',
+    default_value='False', # Default is NOT to run it
+    description='Whether to run the optional extra node')
 
   # Declare the launch arguments  
   declare_model_path_cmd = DeclareLaunchArgument(
@@ -117,6 +126,21 @@ def generate_launch_description():
     name='rviz2',
     output='screen',
     arguments=['-d', rviz_config_file])    
+  
+  # Run DT1?
+  start_square_routine = Node(
+    condition=IfCondition(dt1),
+    package='eced3901',
+    executable='dt1',
+    name='square_routine',
+    output='screen',
+    parameters=[{'use_sim_time': use_sim_time}]
+  )
+
+  delayed_dt1_node = TimerAction(
+    period=3.0,
+    actions=[start_square_routine]
+)
 
   
   # Create the launch description and populate
@@ -132,12 +156,17 @@ def generate_launch_description():
   ld.add_action(declare_use_simulator_cmd)
   ld.add_action(declare_world_cmd)
 
+  ld.add_action(declare_dt1)
+
   # Add any actions
   ld.add_action(start_gazebo_server_cmd)
   ld.add_action(start_gazebo_client_cmd)
   ld.add_action(start_robot_localization_cmd)
   ld.add_action(start_robot_state_publisher_cmd)
   ld.add_action(start_rviz_cmd)
+
+  # Make it do DT1 automatically
+  ld.add_action(delayed_dt1_node)
 
   return ld
 

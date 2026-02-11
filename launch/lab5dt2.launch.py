@@ -6,7 +6,7 @@
 
 import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, TimerAction
 from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
@@ -147,6 +147,11 @@ def generate_launch_description():
     parameters=[{'use_sim_time': use_sim_time}]
   )
 
+  delayed_dt1_node = TimerAction(
+    period=5.0,
+    actions=[start_square_routine]
+  )
+  
   # Save map
   save_map_cmd = Node(
     package='nav2_map_server',
@@ -157,8 +162,8 @@ def generate_launch_description():
 
   save_map_on_exit = RegisterEventHandler(
     event_handler=OnProcessExit(
-        target_action=start_square_routine, # This is your C++ node from earlier
-        on_exit=[save_map_cmd],
+        target_action=start_square_routine,
+        on_exit=[save_map_cmd]
     )
   )
 
@@ -183,7 +188,7 @@ def generate_launch_description():
   ld.add_action(start_rviz_cmd)
   ld.add_action(start_ros2_navigation_cmd)
   # Square then save map
-  ld.add_action(start_square_routine)
+  ld.add_action(delayed_dt1_node)
   ld.add_action(save_map_on_exit)
 
   return ld
