@@ -1,10 +1,10 @@
 amcl:
   ros__parameters:
     use_sim_time: True
-    alpha1: 0.2
-    alpha2: 0.2
-    alpha3: 0.2
-    alpha4: 0.2
+    alpha1: 0.02
+    alpha2: 0.02
+    alpha3: 0.02
+    alpha4: 0.02
     alpha5: 0.02
     base_frame_id: "base_footprint"
     beam_skip_distance: 0.5
@@ -166,8 +166,8 @@ controller_server:
       PathAlign.forward_point_distance: 0.1
       GoalAlign.scale: 24.0 # was 24.0
       GoalAlign.forward_point_distance: 0.1
-      PathDist.scale: 20.0 # was 32.0
-      GoalDist.scale: 20.0 # was 24.0
+      PathDist.scale: 32.0 # was 32.0
+      GoalDist.scale: 24.0 # was 24.0
       RotateToGoal.scale: 32.0
       RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
@@ -192,8 +192,8 @@ local_costmap:
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 7.0 # was 3.0
-        inflation_radius: 0.55 # was 0.55
+        cost_scaling_factor: 5.0 # was 3.0
+        inflation_radius: 0.7 # was 0.55
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -212,9 +212,9 @@ local_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
-          raytrace_max_range: 4.5 # 10.0
+          raytrace_max_range: 10.0 # 10.0
           raytrace_min_range: 0.0
-          obstacle_max_range: 4.0 #9.5
+          obstacle_max_range: 9.5 #9.5
           obstacle_min_range: 0.0
       static_layer:
         map_subscribe_transient_local: True
@@ -249,17 +249,17 @@ global_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
-          raytrace_max_range: 4.5 #10.0
+          raytrace_max_range: 10.0 #10.0
           raytrace_min_range: 0.0
-          obstacle_max_range: 4.0 #9.5
+          obstacle_max_range: 9.5 #9.5
           obstacle_min_range: 0.0
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 7.0 # was 3
-        inflation_radius: 0.65 # was 0.95
+        cost_scaling_factor: 5.0 # was 3
+        inflation_radius: 0.7 # was 0.95
       always_send_full_costmap: True
   global_costmap_client:
     ros__parameters:
