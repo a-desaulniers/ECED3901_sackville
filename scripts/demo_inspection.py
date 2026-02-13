@@ -25,6 +25,29 @@ is that there are cameras or RFID sensors mounted on the robots
 collecting information about stock quantity and location.
 """
 
+# This fxn converts Euler angles to a quaternion.
+# Author: AutomaticAddison.com
+import numpy as np # Scientific computing library for Python
+ 
+def get_quaternion_from_euler(roll, pitch, yaw):
+  """
+  Convert an Euler angle to a quaternion.
+   
+  Input
+    :param roll: The roll (rotation around x-axis) angle in radians.
+    :param pitch: The pitch (rotation around y-axis) angle in radians.
+    :param yaw: The yaw (rotation around z-axis) angle in radians.
+ 
+  Output
+    :return qx, qy, qz, qw: The orientation in quaternion [x,y,z,w] format
+  """
+  qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
+  qy = np.cos(roll/2) * np.sin(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.cos(pitch/2) * np.sin(yaw/2)
+  qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
+  qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
+ 
+  return [qx, qy, qz, qw]
+  
 
 def main():
     rclpy.init()
@@ -33,21 +56,22 @@ def main():
 
     # Inspection route, probably read in from a file for a real application
     # from either a map or drive and repeat.
+    # [ X-pos, Y-pos, Theta-yaw ]
     inspection_route = [
-        [1.0, 0.0],
-        [1.0, 1.0],
-        [0.0, 1.0],
-        [0.0, 0.0],]
+        [1.0, 0.0, 1.57],
+        [1.0, 1.0, 3.14],
+        [0.0, 1.0, -1.57],
+        [0.0, 0.0, 0.0]]
 
     # Set our demo's initial pose
-    initial_pose = PoseStamped()
-    initial_pose.header.frame_id = 'map'
-    initial_pose.header.stamp = navigator.get_clock().now().to_msg()
-    initial_pose.pose.position.x = 0.3
-    initial_pose.pose.position.y = 0.3
-    initial_pose.pose.orientation.z = 1.0
-    initial_pose.pose.orientation.w = 0.0
-    navigator.setInitialPose(initial_pose)
+#    initial_pose = PoseStamped()
+#    initial_pose.header.frame_id = 'map'
+#    initial_pose.header.stamp = navigator.get_clock().now().to_msg()
+#    initial_pose.pose.position.x = 0.3
+#    initial_pose.pose.position.y = 0.3
+#    initial_pose.pose.orientation.z = 0.0
+#    initial_pose.pose.orientation.w = 0.0
+#    navigator.setInitialPose(initial_pose)
 
     # Wait for navigation to fully activate
     navigator.waitUntilNav2Active()
@@ -57,11 +81,16 @@ def main():
     inspection_pose = PoseStamped()
     inspection_pose.header.frame_id = 'map'
     inspection_pose.header.stamp = navigator.get_clock().now().to_msg()
-    inspection_pose.pose.orientation.z = 1.0
-    inspection_pose.pose.orientation.w = 0.0
-    for pt in inspection_route:
+    #inspection_pose.pose.orientation.z = 0.0
+    #inspection_pose.pose.orientation.w = 1.0
+    for pt in inspection_route:    
         inspection_pose.pose.position.x = pt[0]
         inspection_pose.pose.position.y = pt[1]
+        q = get_quaternion_from_euler(0,0,pt[2])
+        inspection_pose.pose.orientation.x = q[0]
+        inspection_pose.pose.orientation.y = q[1]      
+        inspection_pose.pose.orientation.z = q[2]
+        inspection_pose.pose.orientation.w = q[3]  
         inspection_points.append(deepcopy(inspection_pose))
     navigator.followWaypoints(inspection_points)
 
@@ -77,11 +106,11 @@ def main():
 
     result = navigator.getResult()
     if result == TaskResult.SUCCEEDED:
-        print('Inspection of shelves complete! Returning to start...')
+        print('Inspection complete! Returning to start...')
     elif result == TaskResult.CANCELED:
-        print('Inspection of shelving was canceled. Returning to start...')
+        print('Inspection was canceled. Returning to start...')
     elif result == TaskResult.FAILED:
-        print('Inspection of shelving failed! Returning to start...')
+        print('Inspection failed! Returning to start...')
 
     # go back to start
     initial_pose.header.stamp = navigator.get_clock().now().to_msg()
@@ -94,4 +123,9 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
+
+
+# EOF
+
+
+
