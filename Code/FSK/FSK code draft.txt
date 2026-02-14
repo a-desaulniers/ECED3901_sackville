@@ -1,0 +1,76 @@
+/*
+ * Transmitter.c
+ * Created: 2025-03-14 1:42:49 PM
+ * Author : Michael Doyle & Andrew Franklin
+
+CHALLENGE REQUIREMENT:
+Communication is established with frequency shift keying (FSK) to enable activation. Optically, a
+message of “BYE” must be transmitted to the receiver in the visible spectrum. For FSK, the two
+frequencies are 1kHz and 3kHz for the marks (high) and spaces (low) respectively transmitting at 110
+bps, with 8 data bits and no parity or extra bits for control or framing.
+*/
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+unsigned char ID[3] = {66,89,69}; // array that contains the "BYE" signal information
+uint8_t byteC=0; // current char we are on. 0 is "B," 1 is "Y," and 2 is "E."
+uint8_t bitC=7; // current bit of the char we are on. Started at the top for obvious reasons
+uint8_t dumb=0; // I am using this dummy variable to turn 3kHz -> 1kHz by repeatedly counting 3 cycles later on
+uint8_t moveon=0; // this is a counter I use later to determine when to move onto the next bit
+uint8_t zone=1; // the "zone" is the current bit the program is transmitting. Starts at 1 because "B" starts with 1, but doesn't matter.
+
+// Variables/Functions
+unsigned short timer;
+void setup(); // sets up shit needed before logic
+void flip(); // *flips* the signal from on or off, needs to be activated twice for a full period of a square wave
+
+
+ISR(TIMER0_COMPA_vect){
+	timer++; // this is just a cute little guy idk
+}
+
+int main(void) {
+	int now;
+	setup();
+	
+	while (1) {
+		now = timer; 
+		if(zone==0){ // zone is the current bit of the "BYE" signal the progam is on
+			flip(); // runs at twice at 6kHz for the illusion of a square wave of 3kHz
+		}
+		else{
+			dumb++; // I need to count 3 times to force a 1kHz signal out of 3kHz
+			if(dumb==3){
+				flip(); // should run every 1kHz since it's every 3/3 kHz
+				dumb=0; // then we reset it
+			}
+		}
+		while(timer == now); // delays until the 6kHz cycle loops back
+		moveon++; // This counts to accurately move on to the bit at 110dps
+		if(moveon==54){ //6kHz/54 ~= 0.009s. So 1 bit every 0.009s, or 110bits per 1 second
+			moveon=0; //reset the count once we switch
+			
+			if(bitC==0) { //Need to check conditions so I cycle correctly
+				bitC=7; // correctly goes from end of bype to start
+				if(byteC==2) byteC=0; // Same idea as before, after the "E" I need to go back to "B"
+				else byteC++; // Otherwise it's business as usual B->Y or Y->E
+			}
+			else bitC--; // We move down the byte if nothing weird is happening
+			zone = (ID[byteC]>>bitC) & 1; // This puts the current bit in the "zone" variable. You could say it's "in the zone" B)
+		}
+	}
+}
+void setup(void){ // please edit clock such that we can count up to a better number to have 3kHz :)
+	TCCR0A = (1<<WGM01); //Set CTC mode so it timer resets when equal to timer
+	TCCR0B = ((1<<CS01) | (1<<CS00));//Set a pre-scalar value of 64
+	OCR0A = 41; //count up to 42 cycles
+	// 16MHz /(64*42) = 5.95kHz
+	TIMSK0 = (1<<OCIE0A); //Enable interrupt timer
+	EICRA = 0; //Set external interrupt to trigger on low level
+	sei(); //i have absolutely no idea what this does but the whole program breaks if it isnt here
+	DDRD |= 1<<PD3; // this is my output pin! It can change later, just update "flip" below when you do
+}
+void flip(){
+	PORTD ^= (1<<PD3); //flips guy
+}
