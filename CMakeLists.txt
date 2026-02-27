@@ -28,6 +28,8 @@ ament_target_dependencies(dt1 rclcpp std_msgs nav_msgs geometry_msgs tf2)
 add_executable(RTest src/Robot_Test.cpp)
 ament_target_dependencies(RTest rclcpp std_msgs nav_msgs geometry_msgs sensor_msgs tf2)
 
+add_executable(cp_dr src/eced3901_cp_dr.cpp)
+ament_target_dependencies(cp_dr rclcpp std_msgs nav_msgs geometry_msgs sensor_msgs tf2)
 
 
 
@@ -36,6 +38,7 @@ install(TARGETS
   talker
   dt1
   RTest
+  cp_dr
   DESTINATION lib/${PROJECT_NAME})
 # uncomment the following section in order to fill in
 # further dependencies manually.
