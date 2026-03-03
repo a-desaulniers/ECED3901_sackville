@@ -62,8 +62,9 @@ def main():
     # midway: {f2m(13.5/12.0), f2m(5.5), M_PI/2, 50}
     # end {f2m(3), f2m(13), -M_PI/2, 50}
     inspection_route = [
-        [f2m(13.5/12.0), f2m(5.5), 1.57],
-        [f2m(3), f2m(13), -1.57]]
+        [f2m(6.0), f2m(3.0) -f2m(13.5/12.0), 0.0],
+        [f2m(12), 0.0, 3.14]
+    ]
 
     # Set our demo's initial pose
 #    initial_pose = PoseStamped()
