@@ -1,8 +1,7 @@
 /*
- * Four-Sensor Ultrasonic Array - SEQUENTIAL MODE (FINAL)
- * Eliminates crosstalk, corrects timeout & filter bugs.
- * Trigger: PD2 (shared)
- * Echoes: PD3, PD4, PD5, PD6
+ * Four-Sensor Ultrasonic Array - SEQUENTIAL MODE
+ * 
+ * FOR TEAM 3, LICENSE PENDING
  */
 
 #define F_CPU 16000000UL
@@ -26,7 +25,6 @@
 void UART_init(unsigned int ubrr);
 void UART_transmit(unsigned char data);
 void UART_put_uint16(uint16_t n);
-void UART_put_string(const char* str);
 void pulse_trigger(void);
 uint16_t measure_single_sensor(uint8_t echo_pin);
 void measure_all_distances(uint16_t* d1, uint16_t* d2, uint16_t* d3, uint16_t* d4);
@@ -37,7 +35,7 @@ static uint16_t history[NUM_SENSORS][FILTER_SIZE];
 static uint8_t hist_idx[NUM_SENSORS] = {0};
 static uint16_t last_valid[NUM_SENSORS] = {2,2,2,2};
 
-// UART functions (unchanged)
+// UART functions
 void UART_init(unsigned int ubrr) {
     UBRR0H = (unsigned char)(ubrr >> 8);
     UBRR0L = (unsigned char)ubrr;
@@ -65,11 +63,7 @@ void UART_put_uint16(uint16_t n) {
     }
 }
 
-void UART_put_string(const char* str) {
-    while (*str) UART_transmit(*str++);
-}
-
-// Trigger pulse (10 µs)
+// Trigger pulse
 void pulse_trigger(void) {
     PORTD |= (1 << TRIGGER);
     _delay_us(10);
@@ -83,28 +77,28 @@ uint16_t measure_single_sensor(uint8_t echo_pin) {
 
     pulse_trigger();
 
-    // Wait for rising edge – allow up to 40 ms (full range)
+    // Wait for rising edge (up to 40 ms)
     while (!(PIND & (1 << echo_pin)) && timeout < 40000) {
         _delay_us(1);
         timeout++;
     }
-    if (timeout >= 40000) return 0;   // No echo
+    if (timeout >= 40000) return 0;
 
     // Measure pulse width
     while (PIND & (1 << echo_pin)) {
         _delay_us(1);
         count++;
-        if (count > 40000) break;     // Max range
+        if (count > 40000) break;
     }
 
-    // Convert to cm (58 µs per cm, rounding)
+    // Convert to cm
     uint16_t distance = (count + 29) / 58;
     if (distance < 2) distance = 2;
     if (distance > 400) distance = 400;
     return distance;
 }
 
-// Measure all four sensors sequentially (10 ms gap to kill crosstalk)
+// Measure all four sensors sequentially (10 ms gap)
 void measure_all_distances(uint16_t* d1, uint16_t* d2, uint16_t* d3, uint16_t* d4) {
     *d1 = measure_single_sensor(ECHO1);
     _delay_ms(10);
@@ -115,20 +109,17 @@ void measure_all_distances(uint16_t* d1, uint16_t* d2, uint16_t* d3, uint16_t* d
     *d4 = measure_single_sensor(ECHO4);
 }
 
-// Smoothing filter – now accepts 0 (no object) as a valid reading
+// Smoothing filter – accepts 0 (no object) as valid
 uint16_t get_smoothed_distance(uint16_t new_raw, uint8_t sensor_idx) {
     uint32_t sum = 0;
 
-    // Accept 0 (no object) OR valid 2–400 cm readings
     if (new_raw == 0 || (new_raw >= 2 && new_raw <= 400)) {
         last_valid[sensor_idx] = new_raw;
     }
 
-    // Update circular buffer
     history[sensor_idx][hist_idx[sensor_idx]] = last_valid[sensor_idx];
     hist_idx[sensor_idx] = (hist_idx[sensor_idx] + 1) % FILTER_SIZE;
 
-    // Average
     for (uint8_t i = 0; i < FILTER_SIZE; i++) {
         sum += history[sensor_idx][i];
     }
@@ -139,21 +130,26 @@ uint16_t get_smoothed_distance(uint16_t new_raw, uint8_t sensor_idx) {
 int main(void) {
     UART_init(MYUBRR);
 
-    // Pin setup
-    DDRD |= (1 << TRIGGER);                       // Trigger output
-    DDRD &= ~((1<<ECHO1)|(1<<ECHO2)|(1<<ECHO3)|(1<<ECHO4)); // Echo inputs
-    PORTD &= ~((1<<ECHO1)|(1<<ECHO2)|(1<<ECHO3)|(1<<ECHO4)); // No pull-ups
+    // Short delay to let everything settle and avoid initial UART garbage
+    _delay_ms(200);
 
-    // Initialise filter histories to 2 cm (minimum safe)
+    // Send a blank line to flush any partial line from the host buffer
+    UART_transmit('\r');
+    UART_transmit('\n');
+
+    // Pin setup
+    DDRD |= (1 << TRIGGER);
+    DDRD &= ~((1<<ECHO1)|(1<<ECHO2)|(1<<ECHO3)|(1<<ECHO4));
+    PORTD &= ~((1<<ECHO1)|(1<<ECHO2)|(1<<ECHO3)|(1<<ECHO4));
+
+    // Initialise filter histories
     for (uint8_t s = 0; s < NUM_SENSORS; s++) {
         for (uint8_t i = 0; i < FILTER_SIZE; i++) {
             history[s][i] = 2;
         }
     }
 
-    UART_put_string("4-Sensor Ultrasonic - SEQUENTIAL MODE (FIXED)\r\n");
-    UART_put_string("Format: S1,S2,S3,S4\r\n");
-
+    // Continuous data output
     while (1) {
         uint16_t raw[4], smooth[4];
 
@@ -163,12 +159,12 @@ int main(void) {
             smooth[i] = get_smoothed_distance(raw[i], i);
         }
 
-        // Output CSV
+        // Output CSV line: S1,S2,S3,S4
         UART_put_uint16(smooth[0]); UART_transmit(',');
         UART_put_uint16(smooth[1]); UART_transmit(',');
         UART_put_uint16(smooth[2]); UART_transmit(',');
         UART_put_uint16(smooth[3]); UART_transmit('\r'); UART_transmit('\n');
 
-        _delay_ms(50);   // Overall cycle cooldown
+        _delay_ms(50);
     }
 }
