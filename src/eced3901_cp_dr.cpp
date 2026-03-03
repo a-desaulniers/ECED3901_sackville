@@ -66,7 +66,7 @@ class SquareRoutine : public rclcpp::Node {
 	rclcpp::TimerBase::SharedPtr timer_;
 	
 	// Declaration of Class Variables
-	double x_start = f2m(1), y_start = f2m(-3), yaw_start = M_PI/2; // XYyaw at start of routine
+	double x_start = f2m(1), y_start = f2m(-3), yaw_start = 0; // XYyaw at start of routine
 	double x_now = 0, x_init = x_start, y_now = 0, y_init = y_start;
 	double d_aim = 0;
 	double rol_now=0, pit_now=0, yaw_now=0, yaw_init=yaw_start, yaw_aim=0;
@@ -96,11 +96,11 @@ class SquareRoutine : public rclcpp::Node {
 	
 	// Actions/waypoints
 	Action steps[5] = { // Steps for coastal path // Swapped x and y
-		{f2m(5.5), f2m(-3), M_PI, 50},
-		{f2m(5.5), f2m(-13.5/12.0), M_PI/2, 50},
-		{f2m(8.5), f2m(-13.5/12.0), 0, 50},
-		{f2m(8.5), f2m(-3), M_PI/2, 50},
-		{f2m(13), f2m(-3), -M_PI/2, 50}
+		{f2m(5.5), f2m(-3), M_PI/2, 50},
+		{f2m(5.5), f2m(-13.5/12.0), 0, 50},
+		{f2m(8.5), f2m(-13.5/12.0), -M_PI/2, 50},
+		{f2m(8.5), f2m(-3), 0, 50},
+		{f2m(13), f2m(-3), M_PI, 50}
 	};
 	unsigned int step_count = 0;
 
