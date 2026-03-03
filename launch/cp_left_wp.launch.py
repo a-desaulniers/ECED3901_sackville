@@ -133,13 +133,34 @@ def generate_launch_description():
 
   
   # Launch WP follower
-  start_wpfollow = Node(
+  start_wpfollow_l = Node(
     condition=IfCondition(use_rviz),
     package='eced3901',
     executable='cp_left_wp.py',
-    name='wp_follower',
+    name='wp_follower_l',
+    output='screen') 
+    
+  start_wpfollow_r = Node(
+    condition=IfCondition(use_rviz),
+    package='eced3901',
+    executable='cp_right_wp.py',
+    name='wp_follower_r',
     output='screen') 
   
+  
+  go_back_l = RegisterEventHandler(
+    event_handler=OnProcessExit(
+        target_action=start_wpfollow_l, # The 'trigger' node
+        on_exit=[start_wpfollow_r]              # The 'action' to take
+    )
+  )
+  
+  go_back_r = RegisterEventHandler(
+    event_handler=OnProcessExit(
+        target_action=start_wpfollow_r, # The 'trigger' node
+        on_exit=[start_wpfollow_l]               # The 'action' to take
+    )
+  )
   
   # Create the launch description and populate
   ld = LaunchDescription()
@@ -161,7 +182,7 @@ def generate_launch_description():
   # Add any actions
   ld.add_action(start_rviz_cmd)
   ld.add_action(start_ros2_navigation_cmd)
-  ld.add_action(start_wpfollow)
+  ld.add_action(start_wpfollow_l)
   
   return ld
 
