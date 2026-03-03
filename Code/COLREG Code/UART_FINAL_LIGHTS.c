@@ -14,6 +14,10 @@
 #define FILTER_SIZE 8
 #define NUM_SENSORS 4
 
+#define RED PB2
+#define YELLOW PB3
+#define GREEN PB4
+
 // Pin definitions
 #define TRIGGER PD2
 #define ECHO1   PD3
@@ -128,10 +132,6 @@ uint16_t get_smoothed_distance(uint16_t new_raw, uint8_t sensor_idx) {
 
 // Main
 int main(void) {
-	
-	//COLREGS from pin D8
-    DDRB |= (1 << DDB0);
-    PORTB |= (1 << PORTB0);
     
     UART_init(MYUBRR);
 
@@ -147,8 +147,12 @@ int main(void) {
     DDRD &= ~((1<<ECHO1)|(1<<ECHO2)|(1<<ECHO3)|(1<<ECHO4));
     PORTD &= ~((1<<ECHO1)|(1<<ECHO2)|(1<<ECHO3)|(1<<ECHO4));
     //turn LED ON 
+	//COLREGS from pin D8
+	DDRB |= (1 << DDB0);
+	PORTB |= (1 << PORTB0);
+	DDRB |= (1 << RED) | (1 << YELLOW) | (1 << GREEN); //define the lights here 
 
-    // Initialise filter histories
+    // Initialize filter histories
     for (uint8_t s = 0; s < NUM_SENSORS; s++) {
         for (uint8_t i = 0; i < FILTER_SIZE; i++) {
             history[s][i] = 2;
@@ -163,14 +167,30 @@ int main(void) {
 
         for (uint8_t i = 0; i < 4; i++) {
             smooth[i] = get_smoothed_distance(raw[i], i);
-            //read here which is lowkest 
         }
-
+		// looking at the lowest value read by the john 
+		uint16_t min = 401; //since the max distance read is 400 
+		for (uint8_t i = 0; i < 4; i++) {
+			if (smooth[i] != 0 && smooth[i] < min) {
+				min = smooth[i];
+			}
+		}
+		PORTB &= ~((1 << RED) | (1 << YELLOW) | (1 << GREEN)); //turn the john on 
+		if (min >= 0 && min <= 5) {
+			PORTB |= (1 << RED);       // Red ON
+		}
+		if(min > 5 && min <= 10){
+			PORTB |= (1 << YELLOW); //yellow on bruh
+		}if(min > 10 && min <= 400){
+			PORTB |= (1 << GREEN); //Green on bruh
+		}
+		
         // Output CSV line: S1,S2,S3,S4
         UART_put_uint16(smooth[0]); UART_transmit(','); //the values i need to look at pull from them and check which one is the lowest and then base calc
         UART_put_uint16(smooth[1]); UART_transmit(',');
         UART_put_uint16(smooth[2]); UART_transmit(',');
         UART_put_uint16(smooth[3]); UART_transmit('\r'); UART_transmit('\n');
+		
 
         _delay_ms(50);
     }
