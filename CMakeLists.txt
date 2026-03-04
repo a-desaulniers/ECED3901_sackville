@@ -56,6 +56,8 @@ install(
 install(PROGRAMS
 #  scripts/wp_follower.py
   scripts/cp_left_wp.py
+  scripts/cp_right_wp.py  
+  scripts/cp_wp_IV.py
   scripts/demo_inspection.py
   DESTINATION lib/${PROJECT_NAME})
 

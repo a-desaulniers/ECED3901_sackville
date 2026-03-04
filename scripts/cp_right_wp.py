@@ -62,7 +62,7 @@ def main():
     # midway: {f2m(13.5/12.0), f2m(5.5), M_PI/2, 50}
     # end {f2m(3), f2m(13), -M_PI/2, 50}
     inspection_route = [
-        [f2m(6.0), -f2m(3.0) f2m(13.5/12.0), 0.0],
+        [f2m(6.0), -f2m(3.0) + f2m(13.5/12.0), 0.0],
         [f2m(12.5), 0.0, 3.14]
     ]
 
@@ -116,10 +116,10 @@ def main():
         print('Inspection failed! Returning to start...')
 
     # go back to start
-    initial_pose.header.stamp = navigator.get_clock().now().to_msg()
-    navigator.goToPose(initial_pose)
-    while not navigator.isTaskComplete():
-        pass
+    #initial_pose.header.stamp = navigator.get_clock().now().to_msg()
+    #navigator.goToPose(initial_pose)
+    #while not navigator.isTaskComplete():
+    #    pass
 
     exit(0)
 
