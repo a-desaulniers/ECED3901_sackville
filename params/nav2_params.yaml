@@ -12,7 +12,7 @@ amcl:
     beam_skip_threshold: 0.3
     do_beamskip: false
     global_frame_id: "map"
-    initial_pose: [0.3, 0.3, 0.0, 0.0]
+    initial_pose: [0.0, 0.0, 0.0, 0.0] # Changed from 0.3 0.3
     lambda_short: 0.1
     laser_likelihood_max_dist: 2.0
     laser_max_range: 8.00
@@ -127,8 +127,8 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.2
+      yaw_goal_tolerance: 0.05
     # DWB parameters
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
@@ -156,7 +156,7 @@ controller_server:
       linear_granularity: 0.05
       angular_granularity: 0.025
       transform_tolerance: 0.2
-      xy_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.2
       trans_stopped_velocity: 0.25
       short_circuit_trajectory_evaluation: True
       stateful: True
