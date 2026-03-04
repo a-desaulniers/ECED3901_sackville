@@ -55,17 +55,10 @@ class SquareRoutine : public rclcpp::Node {
       
 	  	// Create the timer
 	  	timer_ = this->create_wall_timer(20ms, std::bind(&SquareRoutine::timer_callback, this)); 	 // Changed to 50Hz 
-	
-		// Open fout
-		fout.open(path);
-		if (test_in) fout << "Angular velocity x,Angular velocity y,Angular velocity z,Time (s);";
-		else fout << "Yaw,Time (s);";
 
 	}
 
-	~SquareRoutine() {
-    	if (fout.is_open()) fout.close();
-	}
+
 
   private:
  	 // Declaration of subscription_ attribute
@@ -102,9 +95,6 @@ class SquareRoutine : public rclcpp::Node {
 	};
 	enum State state = INIT;
 
-	// Output file
-	std::ofstream fout;
-	string path = "src/eced3901/test_logs/IMU_data.csv";
 
 	// Functions
 	void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
@@ -121,6 +111,7 @@ class SquareRoutine : public rclcpp::Node {
 		m.getRPY(rol_now, pit_now, yaw_now);
 		
 		//DEBUG PRINT SYNTAX 
+		RCLCPP_INFO(this->get_logger(), "x: %.3f  y: %.3f", x_now, y_now);
 		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
 	}
 
@@ -141,23 +132,12 @@ class SquareRoutine : public rclcpp::Node {
 		
 		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
 		
-		RCLCPP_INFO(this->get_logger(), "IMU Yaw: %f; Ang vel x: %f, y: %f, z: %f", imu_yaw_now, imu_ang_vel_x, imu_ang_vel_y, imu_ang_vel_z);
+		//RCLCPP_INFO(this->get_logger(), "IMU Yaw: %f; Ang vel x: %f, y: %f, z: %f", imu_yaw_now, imu_ang_vel_x, imu_ang_vel_y, imu_ang_vel_z);
 	}
 	
 	void timer_callback() {
-		if (ticks%5 == 0) { // Poll every 100ms
-			if (test_in)
-				fout << imu_ang_vel_x << "," << imu_ang_vel_y << "," << imu_ang_vel_z << "," << ((float) (ticks/5))/10.0f << ";";
-			else
-				fout << imu_yaw_now << "," << ((float) (ticks/5))/10.0f << ";";				
-		}
-		ticks++;
-
-		if (ticks > 50 * test_time) { // Close after 10s
-			if (fout.is_open()) fout.close();
-			RCLCPP_INFO(this->get_logger(), "Done! IMU data saved in %s", path.c_str());
-			rclcpp::shutdown();
-		}
+		
+		
 
 	}
 	
@@ -201,10 +181,10 @@ int main(int argc, char * argv[]) {
 	// Get velocity
 	//cout << "Velocity: ";
 	//cin >> SquareRoutine::test_vel;
-	cout << "Vel (1) or yaw (0): ";
-	cin >> SquareRoutine::test_in;	
-	cout << "seconds to run for: ";
-	cin >> SquareRoutine::test_time;
+	//cout << "Vel (1) or yaw (0): ";
+	//cin >> SquareRoutine::test_in;	
+	//cout << "seconds to run for: ";
+	//cin >> SquareRoutine::test_time;
 		
 	// Initialize ROS2
 	rclcpp::init(argc, argv);

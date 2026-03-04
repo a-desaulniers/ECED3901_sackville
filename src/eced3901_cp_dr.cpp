@@ -66,7 +66,7 @@ class SquareRoutine : public rclcpp::Node {
 	rclcpp::TimerBase::SharedPtr timer_;
 	
 	// Declaration of Class Variables
-	double x_start = f2m(3), y_start = f2m(1), yaw_start = M_PI/2; // XYyaw at start of routine
+	double x_start = f2m(1), y_start = f2m(-3), yaw_start = 0; // XYyaw at start of routine
 	double x_now = 0, x_init = x_start, y_now = 0, y_init = y_start;
 	double d_aim = 0;
 	double rol_now=0, pit_now=0, yaw_now=0, yaw_init=yaw_start, yaw_aim=0;
@@ -95,15 +95,17 @@ class SquareRoutine : public rclcpp::Node {
 	enum State prev_state = INIT;
 	
 	// Actions/waypoints
-	Action steps[5] = { // Steps for coastal path
-		{f2m(3), f2m(5.5), M_PI, 50},
-		{f2m(13.5/12.0), f2m(5.5), M_PI/2, 50},
-		{f2m(13.5/12.0), f2m(8.5), 0, 50},
-		{f2m(3), f2m(8.5), M_PI/2, 50},
-		{f2m(3), f2m(13), -M_PI/2, 50}
+	Action steps[5] = { // Steps for coastal path // Swapped x and y
+		{f2m(5.5), f2m(-3), M_PI/2, 50},
+		{f2m(5.5), f2m(-13.5/12.0), 0, 50},
+		{f2m(8.5), f2m(-13.5/12.0), -M_PI/2, 50},
+		{f2m(8.5), f2m(-3), 0, 50},
+		{f2m(13), f2m(-3), M_PI, 50}
 	};
 	unsigned int step_count = 0;
 
+	// Initialization correction
+	bool got_init = false;
 
 	// Functions
 	double f2m(double feet) { // Feet to meters conversion
@@ -111,9 +113,7 @@ class SquareRoutine : public rclcpp::Node {
 	}
 
 	void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
-		x_now = msg->pose.pose.position.x + x_start; // Added start offset
-		y_now = msg->pose.pose.position.y + y_start; // "
-		
+		// Calculate rpy
 		tf2::Quaternion q(
 			msg->pose.pose.orientation.x,
 			msg->pose.pose.orientation.y,
@@ -122,6 +122,20 @@ class SquareRoutine : public rclcpp::Node {
 		);
 		tf2::Matrix3x3 m(q);
 		m.getRPY(rol_now, pit_now, yaw_now);
+		
+		// Fix initial offset
+		if (!got_init) {
+			x_start -= msg->pose.pose.position.x;
+			y_start -= msg->pose.pose.position.y;
+			yaw_start = atan2(sin(yaw_start - yaw_now), cos(yaw_start - yaw_now));
+			got_init = true;
+			RCLCPP_INFO(this->get_logger(), "init x: %f, init y: %f, init yaw: %f, seen yaw: %f", x_start, y_start, yaw_start, atan2(sin(yaw_now + yaw_start), cos(yaw_now + yaw_start)) );
+		}
+		
+		// Flip X and Y due to IMU fuckery
+		x_now = msg->pose.pose.position.x + x_start; // Added start offset
+		y_now = msg->pose.pose.position.y + y_start; // "
+		
 		yaw_now = atan2(sin(yaw_now + yaw_start), cos(yaw_now + yaw_start)); // Start offset
 
 		//DEBUG PRINT SYNTAX 
@@ -149,7 +163,8 @@ class SquareRoutine : public rclcpp::Node {
 			}
 			case ALIGN: {
 				double yaw_tar = atan2(steps[step_count].y - y_now, steps[step_count].x - x_now); // Target yaw
-				//RCLCPP_INFO(this->get_logger(), "Aligning. yaw: %f", yaw_now);
+				RCLCPP_INFO(this->get_logger(), "Aligning. x: %f, y: %f,   xtar: %f, ytar: %f", x_now, y_now, steps[step_count].x, steps[step_count].y);
+				//RCLCPP_INFO(this->get_logger(), "Aligning. yaw: %f, target: %f", yaw_now, yaw_tar);
 				if (!calc_ang_vel(yaw_tar, msg)) break; // Movement incomplete
 				// Movement complete
 				prev_state = state;
@@ -216,9 +231,9 @@ class SquareRoutine : public rclcpp::Node {
 
 	char calc_ang_vel(double target, geometry_msgs::msg::Twist &msg) { // PI controller to turn the robot to the target angle. Returns 1 when complete.
 		// Calculate rotation
-		double rot_now = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init)); // arctan(tan(x)) normalizes the angle into the range (-pi, pi)
-		double ang_err = atan2(sin(target - rot_now), cos(target - rot_now)); // CANT HANDLE CW TURNS
-		RCLCPP_INFO(this->get_logger(), "Turning. Ang: %f, Ang err: %f", yaw_now, ang_err);
+		//double rot_now = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init)); // arctan(tan(x)) normalizes the angle into the range (-pi, pi)
+		double ang_err = atan2(sin(target - yaw_now), cos(target - yaw_now));
+		//RCLCPP_INFO(this->get_logger(), "Turning. Ang: %f, Ang err: %f", yaw_now, ang_err);
 		if (abs(ang_err) < ang_tol) { // Close enough
 			msg.angular.z = 0;
 			//ticks = wait_ticks;
