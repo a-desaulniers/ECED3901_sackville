@@ -1,0 +1,14 @@
+scan_to_scan_filter_chain:
+  ros__parameters:
+    filter1:
+      name: back_clearance
+      type: laser_filters/LaserScanBoxFilter
+      params:
+        box_frame: base_link # Use your robot's center frame
+        min_x: -1.0  # Everything from 1 meter behind...
+        max_x: -0.05 # ...to just behind the LiDAR sensor
+        min_y: -0.5  # 0.5m to the right
+        max_y: 0.5   # 0.5m to the left
+        min_z: -1.0
+        max_z: 1.0
+        invert: false # False means: REMOVE everything inside this box

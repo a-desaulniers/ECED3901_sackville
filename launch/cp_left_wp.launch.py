@@ -23,14 +23,16 @@ def generate_launch_description():
   default_launch_dir = os.path.join(pkg_share, 'launch')
   default_model_path = os.path.join(pkg_share, 'models/eced3901bot.urdf')
   robot_name_in_urdf = 'eced3901bot'
-  default_rviz_config_path = os.path.join(pkg_share, 'rviz/nav2.rviz')
+  default_rviz_config_path = os.path.join(pkg_share, 'rviz/nav2_filt.rviz')
   nav2_dir = FindPackageShare(package='nav2_bringup').find('nav2_bringup') 
   nav2_launch_dir = os.path.join(nav2_dir, 'launch') 
   static_map_path = os.path.join(pkg_share, 'maps', 'cp_left_map.yaml')
-  nav2_params_path = os.path.join(pkg_share, 'params', 'nav2_params.yaml')
+  nav2_params_path = os.path.join(pkg_share, 'params', 'nav2_params_filt.yaml')
   nav2_bt_path = FindPackageShare(package='nav2_bt_navigator').find('nav2_bt_navigator')
   behavior_tree_xml_path = os.path.join(nav2_bt_path, 'behavior_trees', 'navigate_w_replanning_and_recovery.xml')
-  
+  laser_filter_path = os.path.join(pkg_share, 'params', 'laser_filter_config.yaml')
+
+
   # Launch configuration variables specific to simulation
   autostart = LaunchConfiguration('autostart')
   default_bt_xml_filename = LaunchConfiguration('default_bt_xml_filename')
@@ -165,6 +167,17 @@ def generate_launch_description():
     )
   )
   
+  # Laser filter
+  laser_filter = Node(
+      package='laser_filters',
+      executable='scan_to_scan_filter_chain',
+      parameters=[laser_filter_path],
+      remappings=[
+          ('scan', '/scan'),      # Input from your LiDAR
+          ('scan_filtered', '/scan_filtered')      # Output to Nav2/AMCL
+      ]
+  )
+
   # Create the launch description and populate
   ld = LaunchDescription()
 
@@ -180,7 +193,9 @@ def generate_launch_description():
   ld.add_action(declare_slam_cmd)
   ld.add_action(declare_use_rviz_cmd) 
   ld.add_action(declare_use_sim_time_cmd)
-
+  
+  # Filter
+  ld.add_action(laser_filter)
 
   # Add any actions
   ld.add_action(start_rviz_cmd)
