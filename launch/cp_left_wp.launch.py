@@ -14,7 +14,7 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 # Triggarin
 from launch.actions import RegisterEventHandler
-from launch.event_handlers import OnProcessExit
+from launch.event_handlers import OnProcessExit, OnProcessStart
 
 def generate_launch_description():
 
@@ -144,26 +144,18 @@ def generate_launch_description():
     executable='cp_left_wp.py',
     name='wp_follower_l',
     output='screen') 
-    
-  start_wpfollow_r = Node(
-    condition=IfCondition(use_rviz),
+  
+  start_UART_bridge = Node(
     package='eced3901',
-    executable='cp_right_wp.py',
-    name='wp_follower_r',
-    output='screen') 
-  
-  
-  go_back_l = RegisterEventHandler(
-    event_handler=OnProcessExit(
-        target_action=start_wpfollow_l,         # The 'trigger' node
-        on_exit=[start_wpfollow_r]              # The 'action' to take
-    )
+    executable='serial_bridge',
+    name='UART_bridge',
+    output='screen'
   )
   
-  go_back_r = RegisterEventHandler(
-    event_handler=OnProcessExit(
-        target_action=start_wpfollow_r,          # The 'trigger' node
-        on_exit=[start_wpfollow_l]               # The 'action' to take
+  start_wp_on_UART_start = RegisterEventHandler(
+    event_handler=OnProcessStart(
+        target_action=start_UART_bridge,         # The 'trigger' node
+        on_start=[start_wpfollow_l]              # The 'action' to take
     )
   )
   
@@ -200,7 +192,8 @@ def generate_launch_description():
   # Add any actions
   ld.add_action(start_rviz_cmd)
   ld.add_action(start_ros2_navigation_cmd)
-  ld.add_action(start_wpfollow_l)
+  ld.add_action(start_UART_bridge)
+  ld.add_action(start_wp_on_UART_start)
   #ld.add_action(go_back_l) # Go back after reached other side
   
   return ld
