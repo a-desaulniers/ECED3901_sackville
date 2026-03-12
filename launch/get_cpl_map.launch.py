@@ -141,7 +141,7 @@ def generate_launch_description():
   # Start square routine
   start_square_routine = Node(
     package='eced3901',
-    executable='dt1',
+    executable='cp_dr',
     name='square_routine',
     output='screen',
     parameters=[{'use_sim_time': use_sim_time}]
@@ -157,7 +157,7 @@ def generate_launch_description():
     package='nav2_map_server',
     executable='map_saver_cli',
     output='screen',
-    arguments=['-f', os.path.join(repo_path, 'maps', 'dt2_map')]
+    arguments=['-f', os.path.join(repo_path, 'maps', 'cp_right_map')]
   )
 
   save_map_on_exit = RegisterEventHandler(

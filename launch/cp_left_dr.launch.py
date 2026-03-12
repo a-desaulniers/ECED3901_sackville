@@ -188,8 +188,8 @@ def generate_launch_description():
   ld.add_action(start_rviz_cmd)
   ld.add_action(start_ros2_navigation_cmd)
   # Square then save map
-  ld.add_action(delayed_dt1_node)
-  ld.add_action(save_map_on_exit)
+  #ld.add_action(delayed_dt1_node)
+  #ld.add_action(save_map_on_exit)
 
   return ld
 

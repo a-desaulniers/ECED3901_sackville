@@ -14,6 +14,7 @@ License: GNU GPLv3
 #include <string>		// String functions
 #include <cmath>
 #include <iostream>
+#include <fstream>
 
 // ROS Client Library for C++
 #include "rclcpp/rclcpp.hpp"
@@ -23,6 +24,7 @@ License: GNU GPLv3
 #include "geometry_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "nav_msgs/msg/odometry.hpp"
+#include "sensor_msgs/msg/imu.hpp"
 
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
@@ -37,23 +39,32 @@ using namespace std;
 class SquareRoutine : public rclcpp::Node {
   public:
   	static inline double test_vel = 0;
+  	static inline int test_in = 0;
+  	static inline int test_time = 0;
 	// Constructor creates a node named Square_Routine. 
 	SquareRoutine() : Node("Square_Routine") {
 		// Create the subscription
 		// The callback function executes whenever data is published to the 'topic' topic.
 		subscription_ = this->create_subscription<nav_msgs::msg::Odometry>("odom", 10, std::bind(&SquareRoutine::topic_callback, this, _1));
-          
+        	/*if (test_in)*/ imu_sub = this->create_subscription<sensor_msgs::msg::Imu>("imu/imu", 10, std::bind(&SquareRoutine::imu_callback, this, _1));
+        	//else imu_sub = this->create_subscription<sensor_msgs::msg::Imu>("imu/imu", 10, std::bind(&SquareRoutine::imu_callback, this, _1));
+		
 		// Create the publisher
 		// Publisher to a topic named "topic". The size of the queue is 10 messages.
 		publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel",10);
       
 	  	// Create the timer
 	  	timer_ = this->create_wall_timer(20ms, std::bind(&SquareRoutine::timer_callback, this)); 	 // Changed to 50Hz 
+
 	}
+
+
 
   private:
  	 // Declaration of subscription_ attribute
 	rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr subscription_;
+
+	rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub;
          
 	// Declaration of publisher_ attribute      
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
@@ -71,6 +82,8 @@ class SquareRoutine : public rclcpp::Node {
 	int ticks = 0; // ticks to wait
 	const int wait_ticks=100; // 25 = 500ms
 	bool just_moved = 0;
+
+	double imu_yaw_now = 0, imu_ang_vel_x = 0, imu_ang_vel_y = 0, imu_ang_vel_z = 0;
 	
 	// States enum
 	enum State {
@@ -81,6 +94,7 @@ class SquareRoutine : public rclcpp::Node {
 		STOP
 	};
 	enum State state = INIT;
+
 
 	// Functions
 	void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
@@ -97,73 +111,34 @@ class SquareRoutine : public rclcpp::Node {
 		m.getRPY(rol_now, pit_now, yaw_now);
 		
 		//DEBUG PRINT SYNTAX 
+		RCLCPP_INFO(this->get_logger(), "x: %.3f  y: %.3f", x_now, y_now);
 		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
+	}
+
+	void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg) {
+		
+		tf2::Quaternion q(
+			msg->orientation.x,
+			msg->orientation.y,
+			msg->orientation.z,
+			msg->orientation.w
+		);
+		tf2::Matrix3x3 m(q);
+		double dummy;
+		m.getRPY(dummy, dummy, imu_yaw_now);
+		imu_ang_vel_x = msg->angular_velocity.x;
+		imu_ang_vel_y = msg->angular_velocity.y;
+		imu_ang_vel_z = msg->angular_velocity.z;
+		
+		//RCLCPP_INFO(this->get_logger(), "roll: %.3f  pitch: %.3f  yaw: %.3f", rol_now, pit_now, yaw_now);
+		
+		//RCLCPP_INFO(this->get_logger(), "IMU Yaw: %f; Ang vel x: %f, y: %f, z: %f", imu_yaw_now, imu_ang_vel_x, imu_ang_vel_y, imu_ang_vel_z);
 	}
 	
 	void timer_callback() {
-		geometry_msgs::msg::Twist msg;
 		
-		// State machine
-		switch (state) {
-			case INIT: {
-				//turn_rads(M_PI/2);
-				move_distance(0.3);
-				state = MOVE;
-				break;
-			}
-			case MOVE: {
-				// Calculate distance travelled from initial
-				d_now =	pow( pow(x_now - x_init, 2) + pow(y_now - y_init, 2), 0.5 );
-				double d_err = d_aim - d_now;
-				if (d_err < lin_tol) { // Check if within tolerance
-					msg.linear.x = 0;
-					msg.angular.z = 0;
-					//ticks = wait_ticks;
-					state = STOP;
-					//just_moved = 1;
-				} else {
-					//double vel = x_vel*d_err;
-					//if (vel < x_vel_min)
-					msg.linear.x = test_vel; 
-					msg.angular.z = 0;
-				}
-				//RCLCPP_INFO(this->get_logger(), "Moving. Ang: %f", yaw_now);
-				break;
-			}
-			case TURN: {
-				// Calculate rotation
-				double rot_now = atan2(sin(yaw_now - yaw_init), cos(yaw_now - yaw_init)); // arctan(tan(x)) normalizes the angle into the range (-pi, pi)
-				double ang_err = atan2(sin(yaw_aim - rot_now), cos(yaw_aim - rot_now)); // CANT HANDLE CW TURNS
-				//RCLCPP_INFO(this->get_logger(), "Turning. Ang: %f, Ang err: %f", yaw_now, ang_err);
-				if (ang_err < ang_tol) { // Close enough
-					msg.angular.z = 0;
-					ticks = wait_ticks;
-					state = WAIT;
-					//just_moved = 0;
-					
-				} else {
-					double vel = test_vel; //(ang_err > ang_vel_min)?(ang_err*ang_vel):(ang_vel_min*ang_vel);
-					msg.angular.z = vel;
-				}
-				break;
-			}
-			case WAIT: {
-				msg.linear.x = 0;
-				msg.angular.z = 0;
-				//RCLCPP_INFO(this->get_logger(), "waiting. Ticks: %d", ticks );
-				//if ((ticks--) <= 0) { // Still waiting?
-					//state = MOVE; //just_moved?TURN:MOVE;
-					//sequence_statemachine();	
-				}
-				break;
-			case STOP: {
-				msg.linear.x = 0;
-				msg.angular.z = 0;
-			}
-		}
-		//RCLCPP_INFO(this->get_logger(), "linear: %f, %f, %f, angular: %f, %f, %f", msg.linear.x, msg.linear.y, msg.linear.z, msg.angular.x, msg.angular.y, msg.angular.z);
-		// Publish msg
-		publisher_->publish(msg);
+		
+
 	}
 	
 	void sequence_statemachine() {
@@ -204,9 +179,13 @@ class SquareRoutine : public rclcpp::Node {
 int main(int argc, char * argv[]) {
 
 	// Get velocity
-	cout << "Velocity: ";
-	cin >> SquareRoutine::test_vel;
-	
+	//cout << "Velocity: ";
+	//cin >> SquareRoutine::test_vel;
+	//cout << "Vel (1) or yaw (0): ";
+	//cin >> SquareRoutine::test_in;	
+	//cout << "seconds to run for: ";
+	//cin >> SquareRoutine::test_time;
+		
 	// Initialize ROS2
 	rclcpp::init(argc, argv);
   

@@ -48,6 +48,8 @@ def get_quaternion_from_euler(roll, pitch, yaw):
  
   return [qx, qy, qz, qw]
   
+def f2m(feet):
+    return feet*0.3048
 
 def main():
     rclpy.init()
@@ -57,11 +59,12 @@ def main():
     # Inspection route, probably read in from a file for a real application
     # from either a map or drive and repeat.
     # [ X-pos, Y-pos, Theta-yaw ]
+    # midway: {f2m(13.5/12.0), f2m(5.5), M_PI/2, 50}
+    # end {f2m(3), f2m(13), -M_PI/2, 50}
     inspection_route = [
-        [1.0, 0.0, 1.57],
-        [1.0, 1.0, 3.14],
-        [0.0, 1.0, -1.57],
-        [0.0, 0.0, 0.0]]
+        [f2m(6.0), f2m(3.0) -f2m(13.5/12.0), 0.0],
+        [f2m(12.8), f2m(-0.3), 3.14]
+    ]
 
     # Set our demo's initial pose
 #    initial_pose = PoseStamped()
@@ -113,10 +116,10 @@ def main():
         print('Inspection failed! Returning to start...')
 
     # go back to start
-    initial_pose.header.stamp = navigator.get_clock().now().to_msg()
-    navigator.goToPose(initial_pose)
-    while not navigator.isTaskComplete():
-        pass
+    #initial_pose.header.stamp = navigator.get_clock().now().to_msg()
+    #navigator.goToPose(initial_pose)
+    #while not navigator.isTaskComplete():
+    #    pass
 
     exit(0)
 

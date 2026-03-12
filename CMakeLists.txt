@@ -13,6 +13,7 @@ find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 
 # --- Cpp executables ---
@@ -23,11 +24,13 @@ add_executable(dt1 src/eced3901_dt1.cpp)
 ament_target_dependencies(dt1 rclcpp std_msgs nav_msgs geometry_msgs tf2)
 
 add_executable(RTest src/Robot_Test.cpp)
-ament_target_dependencies(RTest rclcpp std_msgs nav_msgs geometry_msgs tf2)
+ament_target_dependencies(RTest rclcpp std_msgs nav_msgs geometry_msgs sensor_msgs tf2)
 
 # New Serial Bridge Executable
 add_executable(serial_bridge src/serial_bridge_node.cpp)
 ament_target_dependencies(serial_bridge rclcpp std_msgs)
+add_executable(cp_dr src/eced3901_cp_dr.cpp)
+ament_target_dependencies(cp_dr rclcpp std_msgs nav_msgs geometry_msgs sensor_msgs tf2)
 
 # --- Install Cpp executables ---
 install(TARGETS
@@ -35,6 +38,7 @@ install(TARGETS
   dt1
   RTest
   serial_bridge
+  cp_dr
   DESTINATION lib/${PROJECT_NAME})
 
 install(
@@ -43,6 +47,10 @@ install(
 
 # --- Install Python executables ---
 install(PROGRAMS
+#  scripts/wp_follower.py
+  scripts/cp_left_wp.py
+  scripts/cp_right_wp.py  
+  scripts/cp_wp_IV.py
   scripts/demo_inspection.py
   DESTINATION lib/${PROJECT_NAME})
 
