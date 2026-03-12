@@ -96,11 +96,11 @@ class SquareRoutine : public rclcpp::Node {
 	
 	// Actions/waypoints
 	Action steps[5] = { // Steps for coastal path // Swapped x and y
-		{f2m(5.5), f2m(-3), M_PI/2, 50},
-		{f2m(5.5), f2m(-13.5/12.0), 0, 50},
-		{f2m(8.5), f2m(-13.5/12.0), -M_PI/2, 50},
+		{f2m(5.5), f2m(-3), -M_PI/2, 50},
+		{f2m(5.5), f2m(-6+13.5/12.0), 0, 50},
+		{f2m(8.5), f2m(-6+13.5/12.0), M_PI/2, 50},
 		{f2m(8.5), f2m(-3), 0, 50},
-		{f2m(13), f2m(-3), M_PI, 50}
+		{f2m(13), f2m(-3), -M_PI, 50}
 	};
 	unsigned int step_count = 0;
 

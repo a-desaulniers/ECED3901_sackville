@@ -22,7 +22,7 @@ def generate_launch_description():
   default_model_path = os.path.join(pkg_share, 'models/eced3901bot.urdf')
   robot_localization_file_path = os.path.join(pkg_share, 'config/ekf.yaml') 
   robot_name_in_urdf = 'eced3901bot'
-  world_file_name = 'cp_left.world'
+  world_file_name = 'cp_right.world'
   world_path = os.path.join(pkg_share, 'worlds', world_file_name)
   
   # Launch configuration variables specific to simulation

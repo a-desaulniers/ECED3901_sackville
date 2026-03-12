@@ -59,11 +59,23 @@ def main():
     # Inspection route, probably read in from a file for a real application
     # from either a map or drive and repeat.
     # [ X-pos, Y-pos, Theta-yaw ]
-    # midway: {f2m(13.5/12.0), f2m(5.5), M_PI/2, 50}
-    # end {f2m(3), f2m(13), -M_PI/2, 50}
+    #inspection_route = [
+    #    [f2m(6.0), -f2m(3.0) + f2m(13.5/12.0), 0.0],
+    #    [f2m(12.5), 0.0, 3.14]
+    #]
+
     inspection_route = [
-        [f2m(6.0), -f2m(3.0) + f2m(13.5/12.0), 0.0],
-        [f2m(12.5), 0.0, 3.14]
+        [f2m(6.0), -f2m(3.0) +f2m(13.5/12.0), 0.0],
+        [f2m(9.0), f2m(0.0), 0.0],
+        [f2m(12.5), -f2m(2.0), 1.57], # Aim at cargo
+        [f2m(12.5), f2m(0.5), 1.57], # Ram cargo (Hopefully acquire)
+        [f2m(11.6), f2m(0.5), 3.14] # Look away to dump 1st cargo
+    ]
+
+    # Route for going back
+    reverse_route = [
+        [f2m(6.0), -f2m(3.0) +f2m(13.5/12.0), 3.14],
+        [-f2m(0.5), f2m(0.5), 3.14]
     ]
 
     # Set our demo's initial pose
@@ -99,6 +111,8 @@ def main():
 
     # Do something during our route (e.x. AI to analyze stock information or upload to the cloud)
     # Simply the current waypoint ID for the demonstation
+    # TODO: Find lifeboat during initial pass
+
     i = 0
     while not navigator.isTaskComplete():
         i += 1
@@ -109,19 +123,38 @@ def main():
 
     result = navigator.getResult()
     if result == TaskResult.SUCCEEDED:
-        print('Inspection complete! Returning to start...')
+        print('Inspection complete! ')
     elif result == TaskResult.CANCELED:
-        print('Inspection was canceled. Returning to start...')
+        print('Inspection was canceled.')
     elif result == TaskResult.FAILED:
-        print('Inspection failed! Returning to start...')
+        print('Inspection failed!')
 
-    # go back to start
-    #initial_pose.header.stamp = navigator.get_clock().now().to_msg()
-    #navigator.goToPose(initial_pose)
-    #while not navigator.isTaskComplete():
-    #    pass
+    # Drop cargo
+
+
+    # Go back
+    inspection_points = []
+    for pt in reverse_route:    
+        inspection_pose.pose.position.x = pt[0]
+        inspection_pose.pose.position.y = pt[1]
+        q = get_quaternion_from_euler(0,0,pt[2])
+        inspection_pose.pose.orientation.x = q[0]
+        inspection_pose.pose.orientation.y = q[1]      
+        inspection_pose.pose.orientation.z = q[2]
+        inspection_pose.pose.orientation.w = q[3]  
+        inspection_points.append(deepcopy(inspection_pose))
+    navigator.followWaypoints(inspection_points)
+
+    i = 0
+    while not navigator.isTaskComplete():
+        i += 1
+        feedback = navigator.getFeedback()
+        if feedback and i % 5 == 0:
+            print('Executing current waypoint: ' +
+                  str(feedback.current_waypoint + 1) + '/' + str(len(inspection_points)))
 
     exit(0)
+
 
 
 if __name__ == '__main__':

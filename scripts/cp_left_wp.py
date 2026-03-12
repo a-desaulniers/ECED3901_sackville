@@ -43,7 +43,7 @@ def main():
         [f2m(9.0), f2m(0.0), 0.0],
         [f2m(12.5), f2m(2.0), -1.57], # Aim at cargo
         [f2m(12.5), -f2m(0.5), -1.57], # Ram cargo (Hopefully acquire)
-        [f2m(12.0), -f2m(0.5), 3.14] # Look away to dump 1st cargo
+        [f2m(11.6), -f2m(0.5), 3.14] # Look away to dump 1st cargo
     ]
 
     # Route for going back
