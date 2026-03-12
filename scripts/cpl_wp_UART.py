@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # I HATE VIBE CODING I HATE VIBE CODING I HATE VIBE CODING I HATE VIBE CODING
 
 import rclpy
@@ -75,6 +76,7 @@ class NavigatorNode(Node):
         match self.state:
             case State.INIT:
                 self.get_logger().info('Initializing...')
+                self.inspection_points = []
                 for pt in self.inspection_route:    
                     self.inspection_pose.pose.position.x = pt[0]
                     self.inspection_pose.pose.position.y = pt[1]
@@ -84,8 +86,9 @@ class NavigatorNode(Node):
                     self.inspection_pose.pose.orientation.z = q[2]
                     self.inspection_pose.pose.orientation.w = q[3]  
                     self.inspection_points.append(deepcopy(self.inspection_pose))
-                self.navigator.followWaypoints(self.inspection_points)
                 self.state = State.GO
+                self.navigator.followWaypoints(self.inspection_points)
+                
             case State.GO:
                 if not self.navigator.isTaskComplete():
                     self.get_logger().info('Going to destination...')
@@ -114,8 +117,9 @@ class NavigatorNode(Node):
                         self.inspection_pose.pose.orientation.z = q[2]
                         self.inspection_pose.pose.orientation.w = q[3]  
                         self.inspection_points.append(deepcopy(self.inspection_pose))
-                    self.navigator.followWaypoints(self.inspection_points)
                     self.state = State.COME
+                    self.navigator.followWaypoints(self.inspection_points)
+                
             case State.COME:
                 if not self.navigator.isTaskComplete():
                     self.get_logger().info('Returning home...')
@@ -171,3 +175,6 @@ def main(args=None):
     finally:
         node.destroy_node()
         rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
