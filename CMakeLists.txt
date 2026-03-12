@@ -29,6 +29,7 @@ ament_target_dependencies(RTest rclcpp std_msgs nav_msgs geometry_msgs sensor_ms
 # New Serial Bridge Executable
 add_executable(serial_bridge src/serial_bridge_node.cpp)
 ament_target_dependencies(serial_bridge rclcpp std_msgs)
+
 add_executable(cp_dr src/eced3901_cp_dr.cpp)
 ament_target_dependencies(cp_dr rclcpp std_msgs nav_msgs geometry_msgs sensor_msgs tf2)
 
@@ -52,6 +53,7 @@ install(PROGRAMS
   scripts/cp_right_wp.py  
   scripts/cp_wp_IV.py
   scripts/demo_inspection.py
+  scripts/cpl_wp_UART.py
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
