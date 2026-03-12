@@ -124,7 +124,7 @@ uint16_t measure_single_sensor(uint8_t echo_pin) {
 	}
 
 	// Convert to cm
-	uint16_t distance = (count + 29) / 58;
+	uint16_t distance = (count + 14) / 29;
 	if (distance < 2) distance = 2;
 	if (distance > 400) distance = 400;
 	return distance;
