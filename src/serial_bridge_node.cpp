@@ -42,7 +42,7 @@ public:
         RCLCPP_INFO(this->get_logger(), "----------------------------------------");
         
         // Open connection to serial device (r/w)
-        serial_port_ = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY);
+        serial_port_ = open("/dev/ttyUSB4", O_RDWR | O_NOCTTY);
         
         if (serial_port_ < 0) {
             RCLCPP_ERROR(this->get_logger(), "Error opening serial port: %s", strerror(errno));
