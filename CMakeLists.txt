@@ -28,7 +28,7 @@ ament_target_dependencies(RTest rclcpp std_msgs nav_msgs geometry_msgs sensor_ms
 
 # New Serial Bridge Executable
 add_executable(serial_bridge src/serial_bridge_node.cpp)
-ament_target_dependencies(serial_bridge rclcpp std_msgs)
+ament_target_dependencies(serial_bridge rclcpp std_msgs sensor_msgs)
 
 add_executable(cp_dr src/eced3901_cp_dr.cpp)
 ament_target_dependencies(cp_dr rclcpp std_msgs nav_msgs geometry_msgs sensor_msgs tf2)
