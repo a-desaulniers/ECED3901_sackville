@@ -196,6 +196,5 @@ def generate_launch_description():
   ld.add_action(start_wp_on_UART_start)
   #ld.add_action(go_back_l) # Go back after reached other side
   
+
   return ld
-
-
