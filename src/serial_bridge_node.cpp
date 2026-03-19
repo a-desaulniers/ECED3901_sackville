@@ -134,7 +134,7 @@ private:
                 }
                 
              // UART cat command functionality in logger, for bit tx debug
-                RCLCPP_INFO(this->get_logger(), "[DATA] %s", line.c_str());
+                //RCLCPP_INFO(this->get_logger(), "[DATA] %s", line.c_str());
                
                 
                 // Handle lines that might start with a comma, uart freaking out @ boot lol

@@ -27,6 +27,7 @@ class NavigatorNode(Node):
 
         # Declare routes
         self.inspection_route = [
+            #[f2m(0.0), f2m(3.0) -f2m(13.5/12.0), 0.0] # up for testing
             [f2m(6.0), f2m(3.0) -f2m(13.5/12.0), 0.0],
             [f2m(9.0), f2m(0.0), 0.0],
             [f2m(12.5), f2m(2.0), -1.57], # Aim at cargo
@@ -93,7 +94,7 @@ class NavigatorNode(Node):
                     self.inspection_pose.pose.orientation.w = q[3]  
                     self.inspection_points.append(deepcopy(self.inspection_pose))
                 self.state = State.GO
-                self.navigator.followWaypoints(self.inspection_points)
+                #self.navigator.followWaypoints(self.inspection_points)
                 
             case State.GO:
                 if not self.navigator.isTaskComplete(): # Still goin'
@@ -124,7 +125,7 @@ class NavigatorNode(Node):
                         self.inspection_pose.pose.orientation.w = q[3]  
                         self.inspection_points.append(deepcopy(self.inspection_pose))
                     self.state = State.COME
-                    self.navigator.followWaypoints(self.inspection_points)
+                    #self.navigator.followWaypoints(self.inspection_points)
                 
             case State.COME:
                 if not self.navigator.isTaskComplete():
