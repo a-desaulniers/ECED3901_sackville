@@ -32,7 +32,7 @@ class NavigatorNode(Node):
         # Declare routes
         self.inspection_route = [
             #[f2m(0.0), f2m(3.0) -f2m(13.5/12.0), 0.0] # up for testing
-            [f2m(6.0), -f2m(3.0) +f2m(13.5/12.0), 0.0],
+            [f2m(6.0), -f2m(3.0) + f2m(13.5/12.0), 0.0],
             [f2m(9.0), f2m(0.0), 0.0],
             #[f2m(12.5), f2m(2.0), -1.57], # Aim at cargo
             #[f2m(12.5), -f2m(0.5), -1.57], # Ram cargo (Hopefully acquire)

@@ -54,6 +54,7 @@ install(PROGRAMS
   scripts/cp_wp_IV.py
   scripts/demo_inspection.py
   scripts/cpl_wp_UART.py
+  scripts/cpr_wp_UART.py
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

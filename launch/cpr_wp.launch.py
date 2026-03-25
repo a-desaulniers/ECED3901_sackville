@@ -63,6 +63,7 @@ def generate_launch_description():
     description='Top-level namespace')
 
   declare_use_namespace_cmd = DeclareLaunchArgument(
+
     name='use_namespace',
     default_value='False',
     description='Whether to apply a namespace to the navigation stack')
@@ -142,7 +143,7 @@ def generate_launch_description():
     condition=IfCondition(use_rviz),
     package='eced3901',
     executable='cpr_wp_UART.py',
-    name='wp_follower_l',
+    name='wp_follower_r',
     output='screen') 
   
   start_UART_bridge = Node(
